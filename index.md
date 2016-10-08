@@ -11,29 +11,28 @@ dataurl: http://dx.doi.org/10.6084/m9.figshare.1314459
 status: Teaching
 ---
 
-# Data Carpentry {{ page.topic }} for {{ page.domain }}
+# 데이터 카펜트리 -- R [^r-ecology]
 
+[^r-ecology]: [Data Carpentry R for data analysis for Ecology](http://www.datacarpentry.org/R-ecology-lesson/)
 
-Data Carpentry's aim is to teach researchers basic concepts, skills,
-and tools for working with data so that they can get more done in less
-time, and with less pain. The lessons below were designed for those interested
-in working with {{page.domain %}} data in {{page.topic %}}.
+데이터 카펜트리 목표는 과학기술 연구원들에게 데이터로 작업하는데 필요한 
+기본적인 개념, 기술, 도구사용법을 전수해서, 연구원들이
+더 빠른 시간내, 더 적은 고통으로, 더 많은 것을 수행하게 한다.
+다음 학습교재는 [Data Carpentry R for data analysis for Ecology](http://www.datacarpentry.org/R-ecology-lesson/)을 
+번역한 것이다.
 
-This is an introduction to R designed for participants with no programming
-experience. These lessons can be taught in 3/4 of a day. They start with some
-basic information about R syntax, the RStudio interface, and move through how to
-import CSV files, the structure of data.frame, how to deal with factors, how to
-add/remove rows and columns, and finish with how to calculate summary statistics
-for each level and a very brief introduction to plotting.
+프로그래밍 경험이 전혀 없는 워크샵 참석자를 대상으로 R 언어에 대한 소개가 되어 있다.
+학습분량은 3/4일치에 해당된다. R 구문, RStudio 사용법, CSV 파일 불러오는 방법,
+데이터프레임 구조, 요인 처리방법, 행과 열 추가/삭제, 각 수준별 요약 통계량 계산법,
+시각화에 대한 매우 간단한 소개로 구성된다.
 
+**R 교안 기여자 : {{page.contributors | join: ', ' %}}**
 
-**Content Contributors: {{page.contributors | join: ', ' %}}**
+**R 교안 유지보수 담당자: {{page.maintainers | join: ', ' %}}**
 
+**R 교안 한국어 번역: 이광춘
 
-**Lesson Maintainers: {{page.maintainers | join: ', ' %}}**
-
-
-**Lesson status: {{ page.status }}**
+**학습교안 상태: {{ page.status }}**
 
 <!--
   [Information on Lesson Status Categories]()
@@ -41,32 +40,32 @@ for each level and a very brief introduction to plotting.
 
 <!-- ###### INDEX OF LESSONS ON THIS TOPIC ###### -->
 
-## Lessons:
+## 학습교재:
 
-1. [Lesson 00 Before we start](00-before-we-start.html)
-2. [Lesson 01 Introduction to R](01-intro-to-R.html)
-3. [Lesson 02 Starting with data](02-starting-with-data.html)
-4. [Lesson 03 Introducing `data.frame`](03-data-frames.html)
-5. [Lesson 04 Aggregating and analyzing data with dplyr](04-dplyr.html)
-6. [Lesson 05 Data visualization with ggplot2](05-visualization-ggplot2.html)
-7. [Lesson 06 R and SQL](06-r-and-sql.html)
+|       영문                      |                국문                  |
+|---------------------------------|--------------------------------------|
+| 1. [Lesson 00 Before we start](00-before-we-start.html)                       | 1. [교안 00. 시작전](kr/00-before-we-start.html)|
+| 2. [Lesson 01 Introduction to R](01-intro-to-R.html)                          | 2. [교안 01. R 소개](kr/01-intro-to-R.html)|
+| 3. [Lesson 02 Starting with data](02-starting-with-data.html)                 | 3. [교안 02. 데이터를 갖고 출발](kr/02-starting-with-data.html)|
+| 4. [Lesson 03 Introducing `data.frame`](03-data-frames.html)                  | 4. [교안 03. `data.frame` 소개](kr/03-data-frames.html)|
+| 5. [Lesson 04 Aggregating and analyzing data with dplyr](04-dplyr.html)       | 5. [교안 04. `dplyr`로 데이터 총합과 분석](kr/04-dplyr.html)|
+| 6. [Lesson 05 Data visualization with ggplot2](05-visualization-ggplot2.html) | 6. [교안 05. `ggplot2`로 데이터 시각화](kr/05-visualization-ggplot2.html)|
+| 7. [Lesson 06 R and SQL](06-r-and-sql.html)                                   | 7. [교안 06. R 과 SQL](kr/06-r-and-sql.html)|
 
+## 데이터
 
-## Data
+학습에 사용되는 데이터는 [{{page.dataurl %}}]({{page.dataurl %}}) 사이트에서 다운로드 받아 둔다.
 
-Data files for the lesson are available here:
-[{{page.dataurl %}}]({{page.dataurl %}})
+특히, *\*.csv* (콤마 구분값, Comma Separated Value, CSV) 파일을 준비: *species.csv*, *plots.csv*, *surveys.csv*, and *combined.csv*.
 
-Please download the *\*.csv* (Comma Separated Value) files: *species.csv*, *plots.csv*, *surveys.csv*, and *combined.csv*.
+### 사전 준비물
 
-### Requirements
-
-Data Carpentry's teaching is hands-on, so participants are encouraged to use
-their own computers to insure the proper setup of tools for an efficient workflow.
-*These lessons assume no prior knowledge of the skills or tools*, but working
-through this lesson requires working copies of the software described below.
-To most effectively use these materials, please make sure to install everything
-*before* working through this lesson.
+데이터 카펜트리는 직접 키보드에 손을 올려 실습하는 것으로 워크샵 참석자분들이 
+직접 본인 컴퓨터(노트북)를 자져와서 효율적인 작업흐름이 되도록 적절한 도구를 설정해서 준비해 와야 된다.
+*이번 학습과정에 사전 기술과 도구사용법에 대한 지식이 전혀 없다고 가정한다.*
+하지만, 아래에 기술된 소프트웨어에 대한 사본을 컴퓨터에 준비하는 것은 필요하다.
+학습교재를 워크샵에서 최대한 효과적으로 활용하기 위해서 수업 *전에* 
+모든 것이 제대로 설치되어 준비되었는지 확인하면 좋다.
 
 {% if page.software == "Python" %}
 {% include pythonSetup.html %}
@@ -78,4 +77,4 @@ To most effectively use these materials, please make sure to install everything
 {% include anySetup.html %}
 {% endif %}
 
-<p><strong>Twitter</strong>: @datacarpentry</p>
+<p><strong>트위터</strong>: @datacarpentry</p>
