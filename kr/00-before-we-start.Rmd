@@ -1,0 +1,410 @@
+---
+layout: topic
+title: 시작전
+author: Data Carpentry contributors
+minutes: 15
+---
+
+```{r, echo=FALSE, purl=FALSE}
+knitr::opts_chunk$set(results='hide', fig.path='../img/r-lesson-')
+```
+
+------------
+
+> ## 학습 목표
+>
+> 이번 학습단원을 마치게 되면, 학습자는 다음 작업을 수행할 수 있는 경험치를 얻게 된다.:
+>
+> * RStudio 내부 R 프로젝트에 특정 분석작업과 연관된 파일과 디렉토리를 조직화한다.
+> * 스크립트, 함수, 작업 디렉토리, 대입, 객체, 변수를 정의한다.
+> * RStudio, 스크립트, 콘솔, 환경, 플롯 윈도우 목적을 기술한다.
+> * 값을 변수에 대입(할당)한다.
+> * 인자가 없거나, 하나이상 인자명이 없거나, 하나이상 인자명을 있는 함수를 호출한다.
+> * R 함수에 대해서 추가 정보 검색을 위해서 내장된 RStudio 도움말 인터페이스를 사용한다.
+> * R 사용자 커뮤니티에 도움을 요청하는데, 문제가 재현되고 해결될 수 있도록 충분한 정보를 제공한다.
+
+------------
+
+# 시작하기 전에
+
+**작업 디렉토리(woriking directory)**로 불리는 단일 디렉토리에 연관된 데이터, 분석산출물, 문서가 모두 포함하여 한 곳에 저장하는 것은 
+아주 좋은 관행이다.
+그리고 나서, 작업 디렉토리 내부 모든 스크립트는 파일에 *상대 경로*로 접근해서 프로젝트 내부 파일이 위치한 장소를 지정한다.
+(이와 비교하여, 절대경로는 파일이 특정 컴퓨터 위치에 위치함을 지정한다).
+이런 방식으로 작업하게 되면 컴퓨터가 바뀌더라도 프로젝트를 옮기기 쉽고, 다른 작업자와 공유하기도 좋다.
+이렇게 하지 않다면 스크립트를 제대로 동작시키려면 매번 손을 봐야한다.
+
+RStudio는 "Projects" 인터페이스를 통해서 이런 작업을 손쉽게 수행하는 기능을 제공한다.
+RStudio 프로젝트를 생성하게 되면 사용자를 대신해서 작업 디렉토리를 생성할 뿐만 아니라,
+작업 디렉토리 위치도 기억시킨다. 선택사항으로 사용자 정의 설정이 있다면 이를 기억하고 있다가
+작업흐름이 멈춘뒤라도 재시작하기 쉽게 파일도 열어준다.
+다음에서 R 프로젝트 생성하는 단계를 실습한다.
+
+
+* RStudio를 시작한다.
+* `File` 메뉴 아래, `New project` 클릭, `New directory` 선택, 그리고 나서 `Empty project`
+* 새폴더(컴퓨터 과학에서 디렉토리라고 부름)에 대한 이름을 부여하고 편한 장소를 지정한다.
+  워크샵을 진행할 동안 **작업 디렉토리**도 된다. (예를 들어, `~/data-carpentry`)
+* "Create project" 클릭.
+* 화면 오른쪽 `Files` 탭 아래 `New Folder` 클릭하고, 
+  폴더명으로 `data`를 새로 생성한다. (예를 들어, `~/data-carpentry/data`)
+* R 스크립트를 생성 (File > New File > R script), 작업 디렉토리에 저장한다. (예를 들어. `data-carpentry-script.R`)
+
+이제 작업 디렉토리는 다음과 같아 보이면 정상이다:
+
+![How it should look like at the beginning of this lesson](../img/r_starting_how_it_should_like.png)
+
+## 작업 디렉토리 구성하는 방법
+
+프로젝트 전반을 통해서 일관된 디렉토리 구조를 사용하게 되면 작업산출물이 잘 정리되고, 나중에라도 
+원하는 것을 쉽게 찾을 수 있다.
+다수 프로젝트를 동시에 수행할 때 특히 도움이 된다.
+일반적으로, **scripts**, **data**, **documents** 디렉토리를 생성한다.
+
+
+ - **`data/`** 원데이터(raw data)와 특정 분석에 필요해서 생성한 중간 데이터셋을 저장하는데 사용한다.
+   투명성 확보와 [출처(Provenance)](https://en.wikipedia.org/wiki/Provenance)를 밝히기 위해서,
+   원데이터의 사본을 *항상* 접근가능하게 만들고, 프로그램적(수작업보다는 스크립트로)으로 데이터 전처리와 정제작업을 수행해 둬야 된다.
+   원데이터를 처리한 데이터와 분리하는 것도 좋은 생각이다.
+   예를 들어, `data/raw/tree_survey.plot1.txt` 와 `...plot2.txt` 파일을 `scripts/01.preprocess.tree_survey.R`에서 생성된 
+    `data/processed/tree.survey.csv` 파일과 격리한다.
+ - **`documents/`** 문서초안, 문서, 기타 산출물을 담아두는 디렉토리.
+ - **`scripts/`** 서로 다른 분석, 시각화로 작성한 R 스크립트를 저장하는 디렉토리. 함수는 별도 디렉토리에 담아 둘 수도 있다.
+
+ 프로젝트에 따라 디렉토리가 더 필요하거나 하위 디렉토리를 둘 수 있지만, 상기 3종 세트가 디렉토리 관리 중추가 된다.
+ 이번 워크샵에는 `data/` 디렉토리만 필요하다.
+
+![Example of a working directory structure](../img/R-ecology-work_dir_structure.png)
+
+
+# RStudio 소개
+
+
+Let's start by learning about [RStudio](https://www.rstudio.com/), the Integrated Development Environment (IDE).
+
+The RStudio IDE open source product is free under the [Affero General Public License (AGPL) v3](https://www.gnu.org/licenses/agpl-3.0.en.html). RStudio IDE is also available with a commercial license and priority email support from RStudio, Inc.
+
+We will use RStudio IDE to write code, navigate the files found on our computer, inspect the variables we are going to create, and visualize the plots we will generate. RStudio can also be used for other things (e.g., version control, developing packages, writting Shiny apps) that we will not cover during the workshop.
+
+RStudio is divided into 4 "Panes": the editor for your scripts and documents
+(top-left, in the default layout), the R console (bottom-left), your
+environment/history (top-right), and your files/plots/packages/help/viewer
+(bottom-right). The placement of these panes and their content can be customized
+(see menu, RStudio -> Preferences -> Pane Layout). One of the advantages of
+using RStudio is that all the information you need to write code is available in
+a single window. Additionally, with many shortcuts, autocompletion, and
+highlighting for the major file types you use while developing in R, RStudio
+will make typing easier and less error-prone.
+
+
+# Interacting with R
+
+The basis of programming is that we write down instructions for the computer to
+follow, and then we tell the computer to follow those instructions. We write, or
+*code*, instructions in R because it is a common language that both the computer
+and we can understand. We call the instructions *commands* and we tell the
+computer to follow the instructions by *executing* (also called *running*) those
+commands.
+
+There are two main ways of interacting with R: using the console or by using
+script files (plain text files that contain your code). We want our code and
+workflow to be reproducible. In other words, we want to write code in a way that
+anyone can easily replicate, such they can obtain the same results from our code
+on their computer.
+
+The console pane (in RStudio, the bottom left panel) is the place where R is
+waiting for you to tell it what to do, and where it will show the results of a
+command that has been executed.  You can type commands directly into the console
+and press `Enter` to execute those commands, but they will be forgotten when you
+close the session. It is better to enter the commands in the script editor, and
+save the script. This way, you have a complete record of what you did, you can
+easily show others how you did it and you can do it again later on if needed.
+RStudio allows you to execute commands directly from the script editor by using
+the <kbd>`Ctrl`</kbd> + <kbd>`Enter`</kbd> shortcut. The command on the current
+line in the script or all of the commands in the currently selected text will be
+sent to the console and executed when you press <kbd>`Ctrl`</kbd> +
+<kbd>`Enter`</kbd>.
+
+At some point in your analysis you may want to check the content of variable or
+the structure of an object, without necessarily keep a record of it in your
+script. You can type these commands and execute them directly in the console.
+RStudio provides the <kbd>`Ctrl`</kbd> + <kbd>`1`</kbd> and <kbd>`Ctrl`</kbd> +
+<kbd>`2`</kbd> shortcuts allow you to jump between the script and the console
+windows.
+
+If R is ready to accept commands, the R console shows a `>` prompt. If it
+receives a command (by typing, copy-pasting or sent from the script editor using
+<kbd>`Ctrl`</kbd> + <kbd>`Enter`</kbd>), R will try to execute it, and when
+ready, show the results and come back with a new `>`-prompt to wait for new
+commands.
+
+If R is still waiting for you to enter more data because it isn't complete yet,
+the console will show a `+` prompt. It means that you haven't finished entering
+a complete command. This is because you have not 'closed' a parenthesis or
+quotation, i.e. you don't have the same number of left-parentheses as
+right-parentheses, or the same number of opening and closing quotation marks. If
+you're in RStudio and this happens, click inside the console window and press
+`Esc`; this will cancel the incomplete command and return you to the `>` prompt.
+
+# R 기초
+
+S 프로그래밍 언어에 영감을 받아 시작되었다.
+R은 통계학 뿐만 아니라 데이터 과학에도 유용한 다재다능한 오픈소스 프로그래밍/스크립트 언어다.
+
+* [GPL 버젼 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) 라이선스를 갖는 
+  자유/리브레/오픈 소스 소프트웨어.
+* 상용 소프트웨어보다 우월. 7,000개가 넘는 팩키지 보유. 학계와 산업계 모두 널리 사용됨.
+* 모든 플랫폼(운영체제) 지원.
+* 통계언어 뿐만 아니라, 범용 프로그래밍 언어
+* 프로그래밍 경험이 있는 분들에게 갖는 의미: 객체지향언어 뿐만 아니라 [함수형 언어](http://adv-r.had.co.nz/Functional-programming.html)이기도 함.
+* 매우 방대하고 성장하는 동료 커뮤니티 보유
+
+## R 구문
+
+_스크립트 예제를 데모로 보여주며 시작_
+
+* 서로 다른 부분을 언급:
+  - 함수
+  - 대입 연산자 : `<-`
+  - 인자에 사용 : `=`
+  - 주석: `#`, 함수와 함수 내부를 기술하는데 사용
+  - 변수지정 연산자 : `$`
+* 가독성을 위해 들여쓰기와 공백 일관성 유지
+
+![Example of a simple R script](../img/r_starting_example_script.png)
+
+### 주석
+
+`#` 기호를 사용해서 주석처리한다. `#` 기호 오른쪽에 위치하는 모든 것은 R이 무시, 
+즉, 실행되지 않음.
+주석은 코드 내부가 동작하는 방식을 기술하는 아주 좋은 방식이라, R 스크립트 내부에 
+작문하듯 작성한다.
+
+
+### 대입 연산자.
+
+`<-` is the assignment operator. It assigns values on the right to objects on
+the left. So, after executing `x <- 3`, the value of `x` is `3`. The arrow can
+be read as 3 **goes into** `x`.  For historical reasons, you can also use `=` for assignments,
+but not in every context. Because of the [slight](http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html) [differences](https://web.archive.org/web/20130610005305/https://stat.ethz.ch/pipermail/r-help/2009-March/191462.html) in syntax,
+it is good practice to use always `<-` for assignments, except when specifying the values of
+arguments in functions, when only `=` should be used, see below.
+
+In RStudio, typing <kbd>Alt</kbd> + <kbd>-</kbd> (push <kbd>Alt</kbd> at the
+same time as the <kbd>-</kbd> key) will write ` <- ` in a single keystroke.
+
+### Functions and their arguments
+
+Functions are "canned scripts" that automate something complicated or convenient
+or both.  Many functions are predefined, or can be made available by importing R
+*packages* (more on that later). A function usually gets one or more inputs
+called *arguments*. Functions often (but not always) return a *value*. A typical
+example would be the function `sqrt()`. The input (the argument) must be a
+number, and the return value (in fact, the output) is the square root of that
+number. Executing a function ('running it') is called *calling* the function. An
+example of a function call is:
+
+`b <- sqrt(a)`
+
+Here, the value of `a` is given to the `sqrt()` function, the `sqrt()` function
+calculates the square root, and returns the value which is then assigned to
+variable `b`. This function is very simple, because it takes just one argument.
+
+The return 'value' of a function need not be numerical (like that of `sqrt()`),
+and it also does not need to be a single item: it can be a set of things, or
+even a data set. We'll see that when we read data files in to R.
+
+Arguments can be anything, not only numbers or filenames, but also other
+objects. Exactly what each argument means differs per function, and must be
+looked up in the documentation (see below). Some functions take arguments which
+may either be specified by the user, or if left out, take on a *default* value:
+these are called *options*. Options are typically used to alter the way the
+function operates, such as whether it ignores 'bad values', or what symbol to
+use in a plot.  However, if you want something specific, you can specify a value
+of your choice which will be used instead of the default.
+
+Let's try a function that can take multiple arguments: `round()`.
+
+```{r, results='show', purl=FALSE}
+round(3.14159)
+```
+
+Here, we've called `round()` with just one argument, `3.14159`, and it has
+returned the value `3`.  That's because the default is to round to the nearest
+whole number. If we want more digits we can see how to do that by getting
+information about the `round` function.  We can use `args(round)` or look at the
+help for this function using `?round`.
+
+```{r, results='show', purl=FALSE}
+args(round)
+```
+
+```{r, eval=FALSE, purl=FALSE}
+?round
+```
+
+We see that if we want a different number of digits, we can
+type `digits=2` or however many we want.
+
+```{r, results='show', purl=FALSE}
+round(3.14159, digits=2)
+```
+
+If you provide the arguments in the exact same order as they are defined you
+don't have to name them:
+
+```{r, results='show', purl=FALSE}
+round(3.14159, 2)
+```
+
+And if you do name the arguments, you can switch their order:
+
+```{r, results='show', purl=FALSE}
+round(digits=2, x=3.14159)
+```
+
+It's good practice to put the non-optional arguments (like the number you're
+rounding) first in your function call, and to specify the names of all optional
+arguments.  If you don't, someone reading your code might have to look up
+definition of a function with unfamiliar arguments to understand what you're
+doing.
+
+
+# 도움말 찾기
+
+### 사용할 함수명을 알고 있지만, 사용법을 모르는 경우 사용.
+
+If you need help with a specific function, let's say `barplot()`, you can type:
+
+```{r, eval=FALSE, purl=FALSE}
+?barplot
+```
+
+If you just need to remind yourself of the names of the arguments, you can use:
+
+```{r, eval=FALSE, purl=FALSE}
+args(lm)
+```
+
+### 어떤 작업(`X`)를 수행할 함수를 사용하고자 한다. 함수가 확실히 있지만 어떤 것인지 모를 때...
+
+If you are looking for a function to do a particular task, you can use
+`help.search()` function, which is called by the double question mark `??`.
+However, this only looks through the installed packages for help pages with a
+match to your search request
+
+```{r, eval=FALSE, purl=FALSE}
+??kruskal
+```
+
+If you can't find what you are looking for, you can use the
+[rdocumention.org](http://www.rdocumentation.org) website that searches through
+the help files across all packages available.
+
+### 줸장... 오류 메시지가 나왔는데... 이해가 되지 않음.
+
+Start by googling the error message. However, this doesn't always work very well
+because often, package developers rely on the error catching provided by R. You
+end up with general error messages that might not be very helpful to diagnose a
+problem (e.g. "subscript out of bounds"). If the message is very generic, you might
+also include the name of the function or package you're using in your query.
+
+However, you should check StackOverflow. Search using the `[r]` tag. Most
+questions have already been answered, but the challenge is to use the right
+words in the search to find the answers:
+[http://stackoverflow.com/questions/tagged/r](http://stackoverflow.com/questions/tagged/r)
+
+The [Introduction to R](http://cran.r-project.org/doc/manuals/R-intro.pdf) can
+also be dense for people with little programming experience but it is a good
+place to understand the underpinnings of the R language.
+
+The [R FAQ](http://cran.r-project.org/doc/FAQ/R-FAQ.html) is dense and technical
+but it is full of useful information.
+
+## 도움 요청하는 방법
+
+The key to get help from someone is for them to grasp your problem rapidly. You
+should make it as easy as possible to pinpoint where the issue might be.
+
+Try to use the correct words to describe your problem. For instance, a package
+is not the same thing as a library. Most people will understand what you meant,
+but others have really strong feelings about the difference in meaning. The key
+point is that it can make things confusing for people trying to help you. Be as
+precise as possible when describing your problem.
+
+If possible, try to reduce what doesn't work to a simple *reproducible
+example*. If you can reproduce the problem using a very small `data.frame`
+instead of your 50,000 rows and 10,000 columns one, provide the small one with
+the description of your problem. When appropriate, try to generalize what you
+are doing so even people who are not in your field can understand the
+question. For instance instead of using a subset of your real dataset, create a
+small (3 columns, 5 row) generic one. For more information on how to write a
+reproducible example see [this article by Hadley Wickham](http://adv-r.had.co.nz/Reproducibility.html).
+
+To share an object with someone else, if it's relatively small, you can use the
+function `dput()`. It will output R code that can be used to recreate the exact
+same object as the one in memory:
+
+```{r, results='show', purl=FALSE}
+dput(head(iris)) # iris is an example data.frame that comes with R
+```
+
+If the object is larger, provide either the raw file (i.e., your CSV file) with
+your script up to the point of the error (and after removing everything that is
+not relevant to your issue). Alternatively, in particular if your questions is
+not related to a `data.frame`, you can save any R object to a file:
+
+```{r, eval=FALSE, purl=FALSE}
+saveRDS(iris, file="/tmp/iris.rds")
+```
+
+The content of this file is however not human readable and cannot be posted
+directly on stackoverflow. It can however be sent to someone by email who can
+read it with this command:
+
+```{r, eval=FALSE, purl=FALSE}
+some_data <- readRDS(file="~/Downloads/iris.rds")
+```
+
+Last, but certainly not least, **always include the output of `sessionInfo()`**
+as it provides critical information about your platform, the versions of R and
+the packages that you are using, and other information that can be very helpful
+to understand your problem.
+
+```{r, results='show', purl=FALSE}
+sessionInfo()
+```
+
+## Where to ask for help?
+
+* Your friendly colleagues: if you know someone with more experience than you,
+  they might be able and willing to help you.
+* [StackOverflow](http://stackoverflow.com/questions/tagged/r): if your question
+  hasn't been answered before and is well crafted, chances are you will get an
+  answer in less than 5 min. Remember to follow their guidelines on [how to ask
+  a good question](http://stackoverflow.com/help/how-to-ask).
+* The [R-help mailing list](https://stat.ethz.ch/mailman/listinfo/r-help): it is
+  read by a lot of people (including most of the R core team), a lot of people
+  post to it, but the tone can be pretty dry, and it is not always very
+  welcoming to new users. If your question is valid, you are likely to get an
+  answer very fast but don't expect that it will come with smiley faces. Also,
+  here more than everywhere else, be sure to use correct vocabulary (otherwise
+  you might get an answer pointing to the misuse of your words rather than
+  answering your question). You will also have more success if your question is
+  about a base function rather than a specific package.
+* If your question is about a specific package, see if there is a mailing list
+  for it. Usually it's included in the DESCRIPTION file of the package that can
+  be accessed using `packageDescription("name-of-package")`. You may also want
+  to try to email the author of the package directly, or open an issue on the
+  code repository (e.g., GitHub).
+* There are also some topic-specific mailing lists (GIS, phylogenetics, etc...),
+  the complete list is [here](http://www.r-project.org/mail.html).
+
+## 추가 도움자료
+
+* The [Posting Guide](http://www.r-project.org/posting-guide.html) for the R
+  mailing lists.
+* [How to ask for R help](http://blog.revolutionanalytics.com/2014/01/how-to-ask-for-r-help.html)
+  useful guidelines
+* [This blog post by Jon Skeet](http://codeblog.jonskeet.uk/2010/08/29/writing-the-perfect-question/)
+  has quite comprehensive advice on how to ask programming questions.

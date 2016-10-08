@@ -30,7 +30,7 @@ status: Teaching
 
 **R 교안 유지보수 담당자: {{page.maintainers | join: ', ' %}}**
 
-**R 교안 한국어 번역: 이광춘
+**R 교안 한국어 번역: 이광춘**
 
 **학습교안 상태: {{ page.status }}**
 
@@ -44,13 +44,13 @@ status: Teaching
 
 |       영문                      |                국문                  |
 |---------------------------------|--------------------------------------|
-| 1. [Lesson 00 Before we start](00-before-we-start.html)                       | 1. [교안 00. 시작전](kr/00-before-we-start.html)|
-| 2. [Lesson 01 Introduction to R](01-intro-to-R.html)                          | 2. [교안 01. R 소개](kr/01-intro-to-R.html)|
-| 3. [Lesson 02 Starting with data](02-starting-with-data.html)                 | 3. [교안 02. 데이터를 갖고 출발](kr/02-starting-with-data.html)|
-| 4. [Lesson 03 Introducing `data.frame`](03-data-frames.html)                  | 4. [교안 03. `data.frame` 소개](kr/03-data-frames.html)|
-| 5. [Lesson 04 Aggregating and analyzing data with dplyr](04-dplyr.html)       | 5. [교안 04. `dplyr`로 데이터 총합과 분석](kr/04-dplyr.html)|
-| 6. [Lesson 05 Data visualization with ggplot2](05-visualization-ggplot2.html) | 6. [교안 05. `ggplot2`로 데이터 시각화](kr/05-visualization-ggplot2.html)|
-| 7. [Lesson 06 R and SQL](06-r-and-sql.html)                                   | 7. [교안 06. R 과 SQL](kr/06-r-and-sql.html)|
+| 1. [Lesson 00 Before we start](00-before-we-start.html)                       | 1. [00. 시작전](kr/00-before-we-start.html)|
+| 2. [Lesson 01 Introduction to R](01-intro-to-R.html)                          | 2. [01. R 소개](kr/01-intro-to-R.html)|
+| 3. [Lesson 02 Starting with data](02-starting-with-data.html)                 | 3. [02. 데이터를 갖고 출발](kr/02-starting-with-data.html)|
+| 4. [Lesson 03 Introducing `data.frame`](03-data-frames.html)                  | 4. [03. `data.frame` 소개](kr/03-data-frames.html)|
+| 5. [Lesson 04 Aggregating and analyzing data with dplyr](04-dplyr.html)       | 5. [04. `dplyr`로 데이터 총합과 분석](kr/04-dplyr.html)|
+| 6. [Lesson 05 Data visualization with ggplot2](05-visualization-ggplot2.html) | 6. [05. `ggplot2`로 데이터 시각화](kr/05-visualization-ggplot2.html)|
+| 7. [Lesson 06 R and SQL](06-r-and-sql.html)                                   | 7. [06. R 과 SQL](kr/06-r-and-sql.html)|
 
 ## 데이터
 
