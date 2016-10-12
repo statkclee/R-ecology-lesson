@@ -1,5 +1,6 @@
 ---
-title: "SQL databases and R"
+title: "R 과 SQL"
+root: ..
 author: Data Carpentry contributors
 ---
 
@@ -9,67 +10,63 @@ source("setup.R")
 if (file.exists("portalR.db")) file.remove("portalR.db")
 ```
 
-> ## Learning Objectives
+> ## 학습목표
 >
->  By the end of this lesson the learner will:
+>  이번 학습을 마치게 되면 학습을 완료하신 분은 다음을 익히게 됩니다 :
 >
-> * Know how to connect R to an existing database
-> * Be able to use SQL syntax inside R to to query a database and return a subset of data
-> * Be able to use R and SQL to create a new database from existing csv files.
-> * Understand that scripted database interactions enhance the reproducibility of their analysis
+> * 기존 데이터베이스에 R을 연결하는 방법을 알게 된다.
+> * R 내부 SQL 구문을 사용해서 데이터베이스에 질의를 던져 데이터 일부 부분집합을 뽑아낸다.
+> * R과 SQL을 사용해서 기존 `.csv` 파일로부터 데이터베이스를 신규로 만들어낸다.
+> * 스크립트를 활용한 인터랙션 작업을 수행하게 되면 분석에 대한 재현성을 증진시키게 되는 것을 이해한다.
 
 ------------
 
-# Introduction
+# 들어가며
 
-Interacting with databases through scripted languages can offer advantages over
-querying databases via a GUI interface.  A GUI interface for your database is
-easier to use and allows the quick viewing of adhoc queries.  Querying a
-database with a programmatic interface (in this case R, but it could be any
-language) are slightly more complicated.  However the trade-off is that data
-manipulations are preserved in the code.  Aggregations, summaries and other
-database operations are preserved.  Therefore those pre-analysis data
-manipulation steps are not lost and can be reproduced later by yourself or
-others.
+스크립트 언어로 데이터베이스와 상호작용하는 것은 GUI 인터페이스를 경유하여
+데이터베이스에 질의문을 던지는 것과 비교하여 여러 장점을 제공한다.
+데이터베이스에 GUI 인터페이스를 사용하는 방법은 사용하기 쉽고, 
+임의 질의문에 대한 결과를 재빠르게 확인할 수 있다.
+프로그래밍 인터페이스(이번 경우 R, 하지만 임의 어떤 언어도 가능)로 
+데이터베이스에 질의문을 던지는 것은 다소 복잡할 수 있다.
+하지만, 주고받는 상충관계가 존재하는데 데이터 조작 이력이 코드에 담겨진다는 점이다.
+집계, 요약, 기타 데이터베이스 연산도 코드로 보관된다.
+이렇게 함으로써, 데이터 조작 사전 작업이 망실되지 않고 보존되어 본인 뿐만 아니라
+다른 작업자도 나중에 재현할 수 있게 된다.
 
-# Connecting R to sqlite databases
+# R을 `sqlite` 데이터베이스에 연결
 
-R can connect to databases through a number of packages.  In our case we will
-use [RSQLite](http://cran.r-project.org/web/packages/RSQLite/index.html) to
-connect to existing SQLite3 databases.  However you should be able to connect to
-almost any database in R via
-[JDBC](http://cran.r-project.org/web/packages/RJDBC/index.html)
-or [ODBC](http://cran.r-project.org/web/packages/RODBC/index.html), or specific
-database packages (such as we are doing, or
-[MySQL](http://cran.r-project.org/web/packages/RMySQL/index.html) ).
+다양한 팩키지를 사용하여 다양한 데이터베이스에 R을 연결시킬 수 있다.
+이번 경우에 [RSQLite](http://cran.r-project.org/web/packages/RSQLite/index.html) 팩키지를 사용해서
+기존에 작업한 SQLite3 데이터베이스에 연결시킨다.
+하지만, 동일한 메커니즘을 통해 [JDBC](http://cran.r-project.org/web/packages/RJDBC/index.html) 혹은
+ [ODBC](http://cran.r-project.org/web/packages/RODBC/index.html)를 경유해서 R을 연결시킬 수도 있고,
+[MySQL](http://cran.r-project.org/web/packages/RMySQL/index.html) 같은 특정 데이터베이스에 붙일 수 있다.
 
-To begin these exercises we'll connect to the mammal database you've just
-created. We'll need the RSQLite package so be sure to install it
-first. `install.packages('RSQLite')`.
+이번 연습과제로 방금전에 생성시킨 `mammal` 데이터베이스에 R을 연결시킨다.
+`RSQLite` 팩키지가 필요한데, 이를 위해서 먼저 설치작업이 필요하다. `install.packages('RSQLite')`.
 
 ```{r connect, purl=FALSE}
 library(RSQLite)
-## Set dbname and driver out of convenience
+## 편의상 먼저 dbname 과 driver를 설정한다.
 myDB <- "data/portal_mammals.sqlite"
 conn <- dbConnect(drv = SQLite(), dbname= myDB)
 ```
 
-Now we're connected to our database, let's explore the table structure in the
-database.  Remember we could see the list of tables in the SQLite Firefox
-gui. In R, we'll need to use SQL commands.
+이제, 데이터베이스와 연결되었다. 데이터베이스 테이블 구조를 탐색하자.
+SQLite 파이어폭스 GUI에서 살펴봤던 모든 테이블 목록을 기억한다.
+R에서는 SQL 명령어를 사용한다.
 
-# Running SQL queries from R
+# R에서 SQL 질의문 실행
 
-We can view information about the database structure which includes a list of
-all tables like this:
+다음 질의문을 던져 전체 테이블 목록을 포함한 데이터베이스 구조에 대한 정보를 확인할 수 있다:
 
 ```{r Get Table information, eval=FALSE}
 dbGetQuery(conn, "SELECT type, tbl_name  FROM sqlite_master")
 ```
 
-The `RSQLite` package also has functions that can be used to list both tables
-and fields within a table. Here you can see the types and names of fields and
-get a count of records.
+`RSQLite` 팩키지도 테이블과 테이블 내 필드 목록을 살펴보는데 사용되는 함수를 제공한다.
+데이터베이스에 포함된 테이블과 테이블에 포함된 필드명과 레코드 갯수를 다음 질의문으로 확인한다.
 
 ```{r table details, purl=FALSE}
 dbListTables(conn)
@@ -78,23 +75,24 @@ dbListFields(conn,"surveys")
 dbGetQuery(conn,"SELECT count(*) FROM surveys")
 ```
 
-It's good practice to always close a connection that you open in R. Let's do
-that next. Note that once you've closed a connection, you will have to open
-a new connection to query and import the data again.
+항상 R에서 열린 연결(connection)d을 닫는 것은 좋은 습관이자 관행이다.
+질의문을 던져 작업을 완료했기 때문에, 연결을 닫아보자.
+주목할 점은 연결을 끊게 되면, 새로운 연결을 열어 데이터를 다시 가져오고 질의문을 날려야 한다.
 
 ```{r close Connection, purl=FALSE}
 dbDisconnect(conn)
 ```
 
-We've now covered the basics of connecting to a database and exploring its
-basic structure. From here we can write queries to access subsets of the data
-within our database, using the same methods that we used in SQLite.
+지금까지 데이터베이스 연결에 대한 기본적인 사항과 더불어 기본 구조에 대해 탐색했다.
+이제부터 데이터베이스 내부에 담긴 데이터 부분집합에 접근하는 질의문을 작성하는데,
+앞서 SQLite에서 사용한 동일한 방식을 사용한다.
 
-Let's try some basic queries from the previous lesson.  Querying simply takes
-a connection to a database and query as inputs and returns a dataframe with the
-results.
 
-Before we can do this, we need to re-establish a database connection.
+이전 학습에서 사용한 기본 질의문부터 시도해보자.
+단순 질의문은 입력값으로 데이터베이스 연결과 더불어 질의문을 인자로 넘기게 되면
+결과를 데이터프레임에 담아 반환한다.
+
+질의문을 넘기기 전에 데이터베이스 연결을 다시 채결한다.
 
 ```{r reconnect, purl=FALSE}
 ## Set dbname and driver out of convenience
@@ -102,8 +100,8 @@ myDB <- "data/portal_mammals.sqlite"
 conn <- dbConnect(drv = SQLite(), dbname= myDB)
 ```
 
-Next, we build our query. We can use the `dbGetQuery` function to run the query
-and access data returned in a `data.frame` object.
+다음으로, 질의문을 작성한다.
+`dbGetQuery` 함수를 사용해서 질의문을 실행하고 데이터를 `data.frame` 객체로 반환해서 R에서 접근한다.
 
 ```{r basic queries, purl=FALSE}
 q <- 'SELECT DISTINCT year, species_id FROM surveys'
@@ -111,20 +109,20 @@ result <-  dbGetQuery(conn, q)
 head(result)
 ```
 
-> ## Challenge
+> ## 도전과제 
 >
->  1. Write a query that returns counts of genus by `plot_id`
->  2. You can join multiple tables together in SQL using the following syntax
->     where foreign key refers to your unique id (e.g., `species_id`):
+>  1. `plot_id` 테이블에 `genus` 갯수를 반환하는 질의문을 작성한다.
+>  2. 외래키(foreign key)가 `species_id` 같은 유일무이한 유니크 id를 참조하는 다음 구문을 사용해서,
+>     다수 테이블을 병합할 수도 있다:
 >
 >     SELECT table.col, table.col
 >     FROM table1 JOIN table2  
 >     ON table1.key = table2.key  
 >     JOIN table3 ON table2.key = table3.key
 >
-> Write a query that joins the species, plot, and survey tables together. The
-> query should return counts of genus by plot type. Then create a bar plot of
-> your results in R.
+> `species`, `plot`, `survey` 테이블을 모두 병합하는 질의문을 작성한다.
+> 질의문 실행 결과 `plot` 유형별로 `genus` 갯수를 뽑아낸다. 그리고 결과값을 
+> R 막대그래프(`barplot`)로 생성하시오.
 
 
 ```{r genus by type, purl=FALSE}
@@ -140,21 +138,19 @@ GROUP BY d.plot_type,c.genus"
 
 result <- dbGetQuery(conn,q)
 head(result)
-
 ```
 
-All we've done so far is execute the same sorts of queries that can easily be
-made with a GUI.  Now let's try leveraging the power of scripted queries.
-Imagine you want to know how many rodents were found every other year.  To get
-this we'll get the range of dates from the database, sequence them by two and
-make new queries.
+지금까지 작업한 것은 GUI를 사용해서도 쉽게 할 수 있던 동일한 유형의 질의문을 실행시킨 것이다.
+이제 스크립트 질의문(scripted query)의 진정한 힘을 활용해보자.
+2년 마다 년도별로 얼마나 많은 설치류(rodent)가 발견되는지 알고자 하는 상황을 상상해 보자.
+이런 결과를 얻기 위해서, 데이터베이스에서 날짜 범위를 2년 마다 순열을 생성하고 나서 질의문을 새로 작성한다.
 
 ```{r Get years of data, purl=FALSE}
 yearRange <- dbGetQuery(conn,"SELECT min(year),max(year) FROM surveys")
 years <- seq(yearRange[,1],yearRange[,2],by=2)
 ```
 
-Next we'll build our query string using the `paste()` function.
+`paste()` 함수를 사용해서 질의문에 들어가는 문자열을 만들어낸다.
 
 ```{r creating query, purl=FALSE}
 q <- paste("
@@ -172,23 +168,19 @@ rCount <- dbGetQuery(conn,q)
 head(rCount)
 ```
 
-With the nested paste commands we were able to construct a query
-programmatically, without having to type out all the years.  This could also be
-done with a for loop, especially if the query to be constructed is more
-complicated.
+전체 년도를 모두 타이핑하지 않고도, `paste` 명령어를 중첩하여 질의문을 프로그램적으로 
+생성할 수 있다. 특히 작성해야 되는 질의문이 복잡해지면, `for` 루프를 활용해서
+질의문을 작성하는 것도 가능하다.
 
-Creating a SQLite DB using R
-------
 
-We can use R to create a new database and associated structure (also known as
-the schema) databases from existing `csv` files.  Let's recreate the mammals
-database that we've been working with, in R. First let's read in the `csv`
-files.
+# R을 사용해서 SQLite 데이터베이스 생성하기
 
-Up until now we been working with an existing data. However we can use R as a
-way to build up databases from existing flat files.  We'll use the flat files
-that make up the mammals database to recreate it.  First let's read in the
-files.
+R을 사용해서 기존 `.csv` 파일로부터 데이터베이스와 연관된 구조(스키마라고도 부름)를 생성할 수 있다.
+R로 지금까지 작업한 `mammals` 데이터베이스를 다시 생성하자. `.csv` 파일을 먼저 불러 읽어온다.
+
+지금까지는 기존에 존재하는 데이터만 가지고 작업을 진행했다.
+하지만, R을 활용하여 기존 일반적인 파일을 데이터베이스로 만들어낼 수 있다.
+일반적인 파일을 사용해서 `mammals` 데이터베이스로 만들어 보자. 먼저 파일을 읽어들인다.
 
 ```{r Generate a dataframe, purl=FALSE}
 species <- read.csv("data/species.csv")
@@ -196,7 +188,7 @@ surveys <- read.csv("data/surveys.csv")
 plots <- read.csv("data/plots.csv")
 ```
 
-Next we'll need to create a database and add our tables.
+다음으로 데이터베이스를 생성하고 나서 테이블을 추가한다.
 
 ```{r create database, purl=FALSE}
 myDB <- "portalR.db"
@@ -204,9 +196,9 @@ myConn <- dbConnect(drv = SQLite(), dbname= myDB)
 dbListTables(myConn)
 ```
 
-By opening up a connection, you've created a new database.  If you list the
-tables you'll see that the database is empty. Next we'll add the dataframes we
-just read in to the database.
+데이터베이스에 연결을 채결해서 데이터베이스를 새로 생성했다.
+데이터베이스에 포함된 테이블 목록을 불러보면 데이터베이스가 텅빈 것이 확인된다.
+다음으로 방금전에 일반 파일로 불러온 데이터프레임을 데이터베이스에 추가하자.
 
 ```{r add data, purl=FALSE}
 dbWriteTable(myConn,"species",species)
@@ -214,26 +206,21 @@ dbListTables(myConn)
 dbGetQuery(myConn,"SELECT * from species limit 10")
 ```
 
-If you check the location of our database you'll see that data is automatically
-being written to disk. Not only does R and RSQLite provide easy ways to query
-existing databases, it also allows you to easily create your own databases from
-flat files.
+데이터베이스 위치를 점검하면, 자동으로 데이터가 로컬디스크에 저장된 것이 확인된다.
+`R`과 `RSQLite` 모두 기존 데이터베이스에 질의문을 던져 결과를 얻을 수 있는 쉬운 방법을 제공하는 것과 더불어,
+일반적인 파일을 기반으로 데이터베이스를 생성하는 것도 가능케 한다.
 
-If you check the location of your database you'll see that data is automatically
-being written to disk. Not only does R and RSQLite provide easy ways to query
-existing databases, it also allows you to easily create your own databases from
-flat files.
 
-> ## Challenge
+> ## 도전과제
 >
-> Add the remaining tables to the existing database. Open the new database
-> using the Firefox SQLite manager to verify that the database was built
-> successfully.
+> 나머지 테이블을 기존 데이터베이스에 추가하시오. 파이어폭스 SQLite 관리자를 사용해서,
+> 데이터베이스가 성공적으로 생성되었는지 검증한다.
 
 
-> ## Extra Challenge
+> ## 추가 도전과제
 >
-> Run some of your queries from earlier in the lesson to verify that you have
-> faithfully recreated the mammals database.
+> 앞선 수업에서 작성한 질의문을 실행시켜 `mammals` 데이터베이스가 다시 재생성되었는지 
+> 검증하시오.
 
-Don't forget to close your database connection when you are done with it!
+
+모든 작업이 완료되면, 데이터베이스 연결을 끊는 것은 꼭 기억한다!
