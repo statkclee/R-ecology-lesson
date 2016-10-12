@@ -1,12 +1,11 @@
 ---
 title: "R 과 SQL"
-root: ..
 author: Data Carpentry contributors
 ---
 
 
 ```{r, echo=FALSE, purl=FALSE, message = FALSE, results='hide'}
-source("setup.R")
+#source("setup.R")
 if (file.exists("portalR.db")) file.remove("portalR.db")
 ```
 
