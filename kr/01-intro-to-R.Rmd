@@ -1,6 +1,6 @@
 ---
 layout: topic
-title: Introduction to R
+title: R 소개
 author: Data Carpentry contributors
 minutes: 45
 ---
