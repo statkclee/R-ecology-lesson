@@ -1,91 +1,95 @@
 ---
 layout: topic
-title: Manipulating and analyzing data with dplyr; Exporting data
+title: dplyr로 데이터 집계와 분석
 author: Data Carpentry contributors
 ---
 
 ```{r, echo=FALSE, purl=FALSE, message = FALSE}
-source("setup.R")
+#source("setup.R")
 surveys <- read.csv("data/portal_data_joined.csv")
 ```
 
 ------------
 
-> ## Learning Objectives
+> ## 학습목표
 >
-> By the end of this lesson the learner will:
+> 이번 학습단원을 마치게 되면, 학습자는 다음 작업을 수행할 수 있는 경험치를 얻게 된다.:
 >
-> * Know the six basic data manipulation 'verbs' in the dplyr package
-> * Be able to select subsets of columns from a dataframe, and filter rows according to a condition(s)
-> * Use the 'pipe' operator to link together a sequence of dplyr verbs
-> * Be able to create new columns of data by applying functions to existing columns using the 'mutate' command
-> * Know how to export a dataframe to a csv file using write.csv
+> * `dplyr` 팩키지에 사용되는 데이터 조작에 사용되는 '동사(verbs)' 6개를 익히게 된다.
+> * 데이터프레임에서 열 부분집합을 선택하게 되고 조건에 맞는 행을 필터링한다.
+> * `파이프(pipe)` 연산자를 사용해서 `dplyr` 동사를 순열로 조합하여 연결시킬 수 있다.
+> * `mutate` 명령어를 사용해서 함수를 기존 열에 적용해서 신규 칼럼을 생성할 수 있다.
+> * `write.csv` 함수를 사용해서 데이터프레임을 `.csv` 파일로 내보내는 방법을 익힌다.
 
 ------------
 
-# Data Manipulation using dplyr
+# `dplyr` 팩키지를 활용한 데이터 조작
 
-Bracket subsetting is handy, but it can be cumbersome and difficult to read,
-especially for complicated operations. Enter `dplyr`. `dplyr` is a package for
-making data manipulation easier.
+꺽쇠 연산자를 활용한 부분집합 뽑아내는 방법은 편리하기도 하지만,
+복잡한 연산작업에는 가독성이 떨어진다.
+`dplyr` 세상속으로 들어가 보자.
+`dplyr`은 데이터조작을 더 쉽고 데이터 분석을 즐겁도록 개발된 팩키지다.
 
-Packages in R are basically sets of additional functions that let you do more
-stuff. The functions we've been using so far, like `str()` or `data.frame()`,
-come built into R; packages give you access to more of them. Before you use a
-package for the first time you need to install it on your machine, and then you
-should import it in every subsequent R session when you need it.
+R에서 팩키지 역할은 더 많은 작업을 수행할 수 있도록 함수를 모아놓은 것이다.
+지금까지 사용한 함수, 예를 들면, `str()` 혹은 `data.frame()`은 
+R에 기본으로 내장된 것이다; 처음 팩키지를 사용하려면, 본인 컴퓨터에 팩키지를 
+설치해야 된다. 그리고 나서 필요할 때마다 R 세션에서 가져와서 사용해야 된다.
 
 ```{r, eval = FALSE, purl = FALSE}
 install.packages("dplyr")
 ```
 
-You might get asked to choose a CRAN mirror -- this is basically asking you to
-choose a site to download the package from. The choice doesn't matter too much;
-we recommend the RStudio mirror.
+CRAN 미러(mirror)를 지정하도록 요청받는 경우가 있다 --
+본질적으로 팩키지를 다운로드 받을 웹사이트를 지정하는 것과 다름없다.
+어떤 것을 고르든지 그다지 차이가 나지 않는다; 굳이 선택하라고 하면
+RStudio 미러를 추천한다.
 
 ```{r, message = FALSE, purl = FALSE}
-library("dplyr")    ## load the package
+library("dplyr")    ## 팩키지 적재
 ```
 
-## What is `dplyr`?
+## `dplyr`은 뭘까?
 
-The package `dplyr` provides easy tools for the most common data manipulation
-tasks. It is built to work directly with data frames. The thinking behind it was
-largely inspired by the package `plyr` which has been in use for some time but
-suffered from being slow in some cases.` dplyr` addresses this by porting much
-of the computation to C++. An additional feature is the ability to work directly
-with data stored in an external database. The benefits of doing this are
-that the data can be managed natively in a relational database, queries can be
-conducted on that database, and only the results of the query returned.
+`dplyr` 팩키지에는 흔히 데이터를 조작하는데 필요한 쉬운 도구가 포함되어 있다.
+`dplyr` 팩키지는 데이터프레임과 직접붙어 동작하도록 개발되었다.
+`dplyr` 팩키지 이면에는 그전에 한동안 폭넓게 사용된 `plyr` 팩키지에서 영감을 받았는데,
+`plyr` 팩키지는 일부 경우에 속도가 떨어지는 성능문제가 있었다.
+`dplyr`은 연산 상당부분을 C++로 이식해서 이 문제를 해결했다.
+추가적인 기능으로 외부 데이터베이스에 저장된 데이터와 직접 붙어 작업할 수도 있다.
+이런 방식으로 작업을 수행하게 되면 데이터는 자연스럽게 관계형 데이터베이스에서 관리되어
+질의문은 데이터베이스 위에서 실행되고, 질의문 실행결과만 반환된다.
 
-This addresses a common problem with R in that all operations are conducted in
-memory and thus the amount of data you can work with is limited by available
-memory. The database connections essentially remove that limitation in that you
-can have a database of many 100s GB, conduct queries on it directly, and pull
-back just what you need for analysis in R.
+이런 접근법은 R에서 흔히 접하게 되는 일반적인 메모리 관련된 문제에 대한 해법이 된다.
+일반적으로 R에서 작업할 수 있는 데이터 크기는 가용한 메모리 크기로 제약된다.
+데이터베이스 연결이 체결되면 이러한 R 한계를 극복하게 되어 수백 GB 크기를 갖는 데이터를 
+데이터베이스에 넣고, 직접 질의문을 던져 분석에 필요한 데이터를 R로 끌어올 수 있다.
 
-To learn more about `dplyr` after the workshop, you may want to check out this
-[handy dplyr cheatsheet](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf).
+워크샵을 마치고 나서 `dplyr`에 대해 더 많이 배우고자 하는 경우, 
+[dplyr cheatsheet](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)를 참조한다.
 
 
-## Selecting columns and filtering rows
 
-We're going to learn some of the most common `dplyr` functions: `select()`,
-`filter()`, `mutate()`, `group_by()`, and `summarize()`. To select columns of a
-data frame, use `select()`. The first argument to this function is the data
-frame (`surveys`), and the subsequent arguments are the columns to keep.
+## 칼럼을 뽑아내고 행을 필터링한다.
+
+`dplyr` 함수중에서 가장 활용도가 높은 함수를 학습한다: `select()`,
+`filter()`, `mutate()`, `group_by()`, `summarize()`. 
+데이터프레임에서 칼럼을 뽑아낼 때 `select()`를 사용한다. 
+`select()` 함수에 넣은 첫번째 인자는 데이터프레임(`surveys`), 그리고 
+후속 인자는 뽑아낼 칼럼이 인자로 들어간다.
 
 ```{r, results = 'hide', purl = FALSE}
 select(surveys, plot_id, species_id, weight)
 ```
 
-To choose rows, use `filter()`:
+행을 뽑아내는데 `filter()`를 사용한다:
 
 ```{r, purl = FALSE}
 filter(surveys, year == 1995)
 ```
 
-## Pipes
+## 파이프(Pipes)
+
+
 
 But what if you wanted to select and filter at the same time? There are three
 ways to do this: use intermediate steps, nested functions, or pipes. With the
