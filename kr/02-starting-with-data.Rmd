@@ -1,6 +1,6 @@
 ---
 layout: topic
-title: Starting with data
+title: 데이터를 갖고 출발
 author: Data Carpentry contributors
 minutes: 20
 ---
@@ -11,86 +11,86 @@ source("setup.R")
 
 ------------
 
-> ## Learning Objectives
+> ## 학습목표
 >
-> * load external data (CSV files) in memory using the survey table
->  (`surveys.csv`) as an example
-> * explore the structure and the content of a data frame in R
-> * understand what factors are and how to manipulate them
+> * 외부 데이터(CSV 파일)를 메모리에 적재한다. 예제 파일은 조사 테이브(`surveys.csv`).
+> * R에서 데이터프레임 구조와 내용물을 탐색한다.
+> * 요인(factor)가 무엇인지와 더불어 조작방법을 이해한다.
 
 ------------
 
-## Presentation of the Survey Data
+## 조사(survey) 데이터 설명
 
 ```{r, echo=FALSE, purl=TRUE}
 ### Presentation of the survey data
 ```
 
-We are studying the species and weight of animals caught in plots in our study
-area. The dataset is stored as a CSV file: each row holds information for a
-single animal, and the columns represent:
+연구조사 구획에서 포획된 종과 체중을 조사중이다.
+데이터셋은 `CSV` 파일로 저장된다: 각 행별로 각 동물별에 대한 정보가 담겨있는데, 열은 다음을 나타내고 있다:
 
-| Column           | Description                        |
+
+|    열            |       설명                         |
 |------------------|------------------------------------|
-| record\_id       | Unique id for the observation      |
-| month            | month of observation               |
-| day              | day of observation                 |
-| year             | year of observation                |
-| plot\_id         | ID of a particular plot            |
-| species\_id      | 2-letter code                      |
-| sex              | sex of animal ("M", "F")           |
-| hindfoot\_length | length of the hindfoot in mm       |
-| weight           | weight of the animal in grams      |
-| genus            | genus of animal                    |
-| species          | species of animal                  |
-| taxa             | e.g. Rodent, Reptile, Bird, Rabbit |
-| plot\_type       | type of plot                       |
+| record\_id       | 관측점에 대한 유일무이한 ID        |
+| month            | 관측월                             |
+| day              | 관측일                             |
+| year             | 관측년                             |
+| plot\_id         | 구획지에 대한 ID                   |
+| species\_id      | 2-자리 종족 ID                     |
+| sex              | 포획동물 성별 ("M", "F")           |
+| hindfoot\_length | 뒷발 길이 (밀리미터)               |
+| weight           | 포획동물 길이 (그램)               |
+| genus            | 포획동물이 속한 속(genus)          |
+| species          | 동물 종족                          |
+| taxa             | 설치류(Rodent), 파충류(Reptile), 새(Bird), 토끼(Rabbit) 등|
+| plot\_type       | 구획지 유형                        |
 
-We are going to use the R function `download.file()` to download the CSV file
-that contains the survey data from figshare, and we will use `read.csv()` to
-load into memory (as a `data.frame`) the content of the CSV file.
+R함수 `download.file()`를 사용해서 [figshare](https://figshare.com/) 사이트에서 
+조사데이터(survey)가 담긴 CSV 파일을 다운로드한다. 그리고 나서 `read.csv()` 파일을 사용해서
+CSV 파일을 메모리에 `data.frame` 형태로 적재시킨다.
 
-To download the data into the `data/` subdirectory, do:
+데이터를 `data/` 하위디렉토리로 다운로드하려면, 다음 명령어를 실행한다:
 
 ```{r, eval=FALSE, purl=TRUE}
 download.file("https://ndownloader.figshare.com/files/2292169",
               "data/portal_data_joined.csv")
 ```
 
-You are now ready to load the data:
+이제 데이터를 메모리에 적재하여 올린다:
 
 ```{r, eval=TRUE,  purl=FALSE}
 surveys <- read.csv('data/portal_data_joined.csv')
 ```
 
-This statement doesn't produce any output because, as you might recall,
-assignment doesn't display anything. If we want to check that our data has been
-loaded, we can print the variable's value: `surveys`.
+앞서 대입을 하게 되면 어떤 것도 화면에 출력하지 않는 것을 상기한다면,
+상기 문장을 실행하게 되면 어떤 출력결과도 화면에 나오지 않게 된다.
+데이터가 제대로 메모리에 올라갔는지 점검하려면, `surveys`를 콘솔에서 입력하면 
+출력결과가 화면에 뿌려진다.
 
-Wow... that was a lot of output. At least it means the data loaded
-properly. Let's check the top (the first 6 lines) of this `data.frame` using the
-function `head()`:
+와우... 출력결과가 상당하다. 적어도 데이터가 메모리에 제대로 적재된 것이 확인된다.
+`head()` 함수를 사용해서 `data.frame` 첫 6 관측점을 확인해 본다:
 
 ```{r, results='show', purl=FALSE}
 head(surveys)
 ```
 
-A `data.frame` is the representation of data in the format of a table where the
-columns are vectors that all have the same length. Because each column is a
-vector, they all contain the same type of data. We can see this when inspecting
-the __str__ucture of a `data.frame` with the function `str()`:
+`data.frame`은 칼럼이 모두 같은 길이를 갖는 벡터로 구성된 테이블 형태로 
+데이터를 표현한 것이다.
+각 열은 벡터로, 각 벡토는 동일한 자료형이 담겨진다.
+`str()` 함수를 사용하면 `data.frame` 구조(__str__ucture)를 깊숙히 살펴보면 확인된다:
 
 ```{r, purl=FALSE}
 str(surveys)
 ```
 
-### Challenge
+### 도전과제
 
-Based on the output of `str(surveys)`, can you answer the following questions?
+`str(surveys)` 출력결과로 부터, 다음 질문에 답을 할 수 있는가?
 
-* What is the class of the object `surveys`?
-* How many rows and how many columns are in this object?
-* How many species have been recorded during these surveys?
+
+* `surveys` 객체는 어떤 클래스(class)인가?
+* `surveys` 객체에 행과 열의 갯수는 각각 얼마인가?
+* 이번 조사에서 얼마난 많은 종이 기록되었나?
 
 ```{r, echo=FALSE, purl=TRUE}
 
@@ -112,102 +112,98 @@ Based on the output of `str(surveys)`, can you answer the following questions?
 ```
 --->
 
-As you can see, many of the columns consist of integers, however, the columns
-`species` and `sex` are of a special class called a `factor`. Before we learn
-more about the `data.frame` class, let's talk about factors. They are very
-useful but not necessarily intuitive, and therefore require some attention.
+앞에서 보았듯이, 다수 칼럼은 정수형 벡터로 구성되지만, 
+`species` 와 `sex`는 요인(`factor`)으로 불리는 특수한 클래스로 묶여진다.
+데이터프레임 클래스에 대해 추가 학습을 진행하기 전에, 요인에 대해 먼저 살펴본다.
+요인 자료형은 매우 유용하지만 직관적이지 않아서 주의가 요구된다.
 
 
-## Factors
+## 요인(Factors)
 
 ```{r, echo=FALSE, purl=TRUE}
 ### Factors
 ```
 
-Factors are used to represent categorical data. Factors can be ordered or
-unordered, and understanding them is necessary for statistical analysis and for
-plotting.
+요인을 사용해서 범주형 데이터를 표현한다.
+요인은 순서가 있거나 순서가 없는 것으로 구분되는데, 이를 정확히 이해하는 것이
+통계분석과 시각화에 필요하다.
 
-Factors are stored as integers, and have labels associated with these unique
-integers. While factors look (and often behave) like character vectors, they are
-actually integers under the hood, and you need to be careful when treating them
-like strings.
+요인은 정수형으로 저장되고, 유일무이한 정수값과 연관된 표식이 붙여진다.
+요인은 마치 문자형 벡터처럼 보이고 흔히 그렇게 동작하지만,
+실제로 내부를 들여다 보면 정수값이다. 특히 문자열처럼 처리할 때 특별한 주의가 요구된다.
 
-Once created, factors can only contain a pre-defined set of values, known as
-*levels*. By default, R always sorts *levels* in alphabetical order. For
-instance, if you have a factor with 2 levels:
+요인형 벡터를 생성시키게 되면, 요인벡터에는 *수준(level)*으로 미리 정의된 값이 집합으로 담겨진다.
+기본디폴트 설정으로, 항상 *수준*을 알파벳 순으로 정렬시킨다. 예를 들어,
+수준 2개를 갖는 요인이 있다고 가정하면:
 
 ```{r, purl=TRUE}
 sex <- factor(c("male", "female", "female", "male"))
 ```
 
-R will assign `1` to the level `"female"` and `2` to the level `"male"` (because
-`f` comes before `m`, even though the first element in this vector is
-`"male"`). You can check this by using the function `levels()`, and check the
-number of levels using `nlevels()`:
+R은 정수 `1`을 `"female"` 수준, 정수 `2`를 `"male"` 수준에 대입한다.
+벡터 첫번째 원소로 `"male"`이 왔지만, 알파벳순으로 보면 `f`가 `m`보다 순서가 앞서기 때문이다.
+`levels()` 함수를 사용해서 이런 사실을 확인할 수 있고, `nlevels()` 함수를 사용해서 
+수준 갯수도 확인할 수 있다:
 
 ```{r, purl=FALSE}
 levels(sex)
 nlevels(sex)
 ```
 
-Sometimes, the order of the factors does not matter, other times you might want
-to specify the order because it is meaningful (e.g., "low", "medium", "high") or
-it is required by a particular type of analysis. Additionally, specifying the
-order of the levels allows for level comparison:
+어떨 때는, 요인 순서가 문제가 되지 않지만, 다른 경우에는 순서를 지정해야 되는데,
+이유는 유의미하기 때문이다. 예를 들어, "low", "medium", "high" 혹은 
+특정 유형의 분석에서 필요하기 때문이다.
+추가적으로 수준에 대한 순서를 지정하게 되면 수준별 비교가 가능하게 된다:
 
 ```{r, purl=TRUE, error=TRUE}
 food <- factor(c("low", "high", "medium", "high", "low", "medium", "high"))
 levels(food)
 food <- factor(food, levels=c("low", "medium", "high"))
 levels(food)
-min(food) ## doesn't work
+min(food) ## 동작하지 않음!
 food <- factor(food, levels=c("low", "medium", "high"), ordered=TRUE)
 levels(food)
-min(food) ## works!
+min(food) ## 정상 동작함!
 ```
 
-In R's memory, these factors are represented by integers (1, 2, 3), but are more
-informative than integers because factors are self describing: `"low"`,
-`"medium"`, `"high"`" is more descriptive than `1`, `2`, `3`. Which is low?  You
-wouldn't be able to tell just from the integer data. Factors, on the other hand,
-have this information built in. It is particularly helpful when there are many
-levels (like the species in our example data set).
+R 메모리 위에, 요인은 정수(1, 2, 3)로 표현되지만,
+요인으로 표현하게 되면 정수로 표현한 것에 비해 더 유영한 정보를 준다:`"low"`,
+`"medium"`, `"high"`"가 `1`, `2`, `3` 보다 더 좋은 기술방법이 된다.
+`low`가 어떤 것인가? 정수형 데이터로 분간하기는 쉽지 않다. 반면에 요인벡터에는
+`low` 정보가 붙박이로 내장되어 있다. 수준이 많은 경우 이런 방식으로 데이터를 표현한면 
+도움이 많이 된다(예제 데이터셋에서 종족, `species`)
 
-### Converting factors
 
-If you need to convert a factor to a character vector, you use
-`as.character(x)`.
+### 요인 자료형 변경
 
-Converting factors where the levels appear as numbers (such as concentration
-levels) to a numeric vector is a little trickier.  One method is to convert
-factors to characters and then numbers.  Another method is to use the `levels()`
-function. Compare:
+요인벡터를 문자형 벡터로 변경시킬 때 `as.character()` 함수를 사용한다.
+
+응집수준 같은 숫자로 표현된 수준을 갖는 요인벡터를 숫자형 벡터로 변경시키는 것은 다소 
+편법이 필요하다. 방법중 하나는 요인형을 문자형으로 바꾸고나서 숫자로 전환시킨다.
+또다른 방법은 `levels()` 함수를 사용한다. 비교해 보자:
 
 ```{r, purl=TRUE}
 f <- factor(c(1, 5, 10, 2))
-as.numeric(f)               ## wrong! and there is no warning...
-as.numeric(as.character(f)) ## works...
-as.numeric(levels(f))[f]    ## The recommended way.
+as.numeric(f)               ## 틀림! 경고가 없다... 심각함
+as.numeric(as.character(f)) ## 첫번째 방식: 정상 동작된다.
+as.numeric(levels(f))[f]    ## 추천 방식
 ```
 
-Notice that in the `levels()` approach, three important steps occur:
+`levels()` 방법을 취하게 되면, 세가지 중요한 절차가 내부적으로 실행된다:
 
-* We obtain all the factor levels using `levels(f)`
-* We convert these levels to numeric values using `as.numeric(levels(f))`
-* We then access these numeric values using the underlying integers of the
-  vector `f` inside the square brackets
+* `levels(f)`를 실행시켜 요인에 대한 모든 수준을 얻어온다.
+* `as.numeric(levels(f))`을 실행시켜 앞서 받아온 수준을 숫자값으로 전환시킨다.
+* 그리고 나서, 꺾쇠 괄호 내부 `f` 벡터 정수값을 사용해서 숫자값에 접근한다.
 
-### Challenge
+### 도전과제
 
-The function `plot()` can be used to quickly create a bar plot of a factor. For instance, for the factor
-`exprmt <- factor(c("treat1", "treat2", "treat1", "treat3", "treat1", "control", "treat1", "treat2", "treat3"))`, the code `plot(exprmt)`
-gives you a barplot of the number of observations at each level, as shown
-below.
+`plot()` 함수를 사용해서 재빨리 요인에 대한 막대그래프를 생성시킨다.
+예를 들어, `exprmt <- factor(c("treat1", "treat2", "treat1", "treat3", "treat1", "control", "treat1", "treat2", "treat3"))` 요인에 대해서,
+`plot(exprmt)` 코드를 실행시키면 다음에 나타난 것처럼 각 수준별로 관측점에 대한 막대그래프를 생성시킨다.
 
-* What determines the order in which the treatments are listed in the plot? (Hint: use `str` to inspect the factor.)
-* How can you recreate this plot with "control" listed last instead
-of first?
+
+* 막대그래프에 처리(treatment)가 표현된 순서를 무엇이 결정할까? (힌트: 요인을 면밀히 살펴보는데 `str` 함수를 사용하라)
+* "control"을 처음이 아니라 맨 마지막에 나타나도록 막대그래프를 어떻게 다시 만들어낼 수 있을까?
 
 
 ```{r wrong-order, results='show', echo=FALSE, purl=TRUE}
