@@ -84,39 +84,39 @@ select(surveys, plot_id, species_id, weight)
 행을 뽑아내는데 `filter()`를 사용한다:
 
 ```{r, purl = FALSE}
-filter(surveys, year == 1995)
+filter(surveys, year == 1995) %>% head
 ```
 
 ## 파이프(Pipes)
 
+동시에 칼럼을 뽑아내고 행을 필터링한다면 어떨까?
+세가지 방식이 존재한다: 중간 과정을 놓는 방법, 중첩함수를 사용하는 방법, 파이프를 사용하는 방법.
+중간 과정을 두는 방법은 임시 데이터프레임을 생성해서, 다음 함수에 입력값으로 사용하는 방법이다.
+이 방법을 사용하게 되면 작업공간이 수많은 객체로 난잡하게 되는 단점이 있다.
+중첨함수(함수 내부에 또다른 함수)를 사용하는 방법도 있다.
+편리한 방법이기도 하지만, 처리 과정이 내부에서 외부로 나가는 방향으로 진행되어
+너무 많은 함수가 중첩되는 경우 가독성이 상당히 떨어진다.
+마지막 선택지가 파이프로 가장 최근에 추가된 기능이다.
+파이프는 함수 출력값을 받아 다음번 함수에 곧바로 전송한다.
+동일한 데이터셋에 수많은 작업을 수행할 때 매우 유용하다.
+R에서 파이프는 `%>%` 모양인데, `dplyr` 일부로서 `magrittr` 팩키지를 경유해서 이용가능하게 된다.
 
-
-But what if you wanted to select and filter at the same time? There are three
-ways to do this: use intermediate steps, nested functions, or pipes. With the
-intermediate steps, you essentially create a temporary data frame and use that
-as input to the next function. This can clutter up your workspace with lots of
-objects. You can also nest functions (i.e. one function inside of another).
-This is handy, but can be difficult to read if too many functions are nested as
-the process from inside out. The last option, pipes, are a fairly recent
-addition to R. Pipes let you take the output of one function and send it
-directly to the next, which is useful when you need to do many things to the same
-data set.  Pipes in R look like `%>%` and are made available via the `magrittr`
-package installed as part of `dplyr`.
 
 ```{r, purl = FALSE}
 surveys %>%
   filter(weight < 5) %>%
-  select(species_id, sex, weight)
+  select(species_id, sex, weight) %>% head
 ```
 
-In the above we use the pipe to send the `surveys` data set first through
-`filter`, to keep rows where `weight` was less than 5, and then through `select`
-to keep the `species` and `sex` columns. When the data frame is being passed to
-the `filter()` and `select()` functions through a pipe, we don't need to include
-it as an argument to these functions anymore.
+상기 예제에서 파이프를 사용해서 `survyes` 데이터셋을 `filter`로 먼저 보내서 
+체중 `weight`이 5보다 작은 행만 뽑아내고 나서,
+`select`로 `species`, `sex`, `weight` 칼럼을 뽑아낸다.
+데이터프레임을 파이프로 `filter()`, `select()` 함수로 전달할 때, 인자로 데이터프레임을 더이상
+포함시킬 필요가 없다.
 
-If we wanted to create a new object with this smaller version of the data we
-could do so by assigning it a new name:
+더 작은 크기를 갖는 데이터프레임 객체를 새로 생성하고자 한다면,
+일련의 파이프 작업결과를 새로운 이름으로 대입시킨다:
+
 
 ```{r, purl = FALSE}
 surveys_sml <- surveys %>%
@@ -126,12 +126,12 @@ surveys_sml <- surveys %>%
 surveys_sml
 ```
 
-Note that the final data frame is the leftmost part of this expression.
+최종 작업 결과각 표현식 가장 왼쪽에 위치했다.
 
-> ### Challenge {.challenge}
+> ### 도전과제 {.challenge}
 >
->  Using pipes, subset the data to include individuals collected before 1995,
->  and retain the columns `year`, `sex`, and `weight.`
+>  파이프를 사용해서, 데이터의 부분집합을 만들어내는데, 1995년 이전 포획된 개체로 
+>  `year`, `sex`, `weight` 칼럼만 포함되도록 한다.
 
 <!---
 ```{r, eval=FALSE, purl=FALSE}
@@ -143,22 +143,23 @@ surveys %>%
 --->
 
 
-### Mutate
+### `mutate`
 
-Frequently you'll want to create new columns based on the values in existing
-columns, for example to do unit conversions, or find the ratio of values in two
-columns. For this we'll use `mutate()`.
+종종, 기존 칼럼값을 활용하여 새로운 칼럼을 생성하고자 한다. 예를 들어,
+단위를 전환하거나, 두 칼럼을 활용하여 비율을 계산하거나 한다.
+이 작업을 위해서 `mutate()` 동사를 사용한다.
 
-To create a new column of weight in kg:
+킬로그램 단위를 갖는 새로운 칼럼을 생성한다:
 
 ```{r, purl = FALSE}
 surveys %>%
-  mutate(weight_kg = weight / 1000)
+  mutate(weight_kg = weight / 1000) %>% head
 ```
 
-If this runs off your screen and you just want to see the first few rows, you
-can use a pipe to view the `head()` of the data (pipes work with non-dplyr
-functions too, as long as the `dplyr` or `magrittr` packages are loaded).
+실행결과 화면을 뒤덮게 되서, 첫 몇줄만 화면에 보려면 파이프를 사용해서
+데이터 `head()` 함수를 적용시키면 된다.
+*`dplyr` 혹은 `magrittr` 팩키지가 적재되기만 하면 `non-dplyr` 함수도 파이프와 
+연결시켜 실행시킬 수 있다*
 
 ```{r, purl = FALSE}
 surveys %>%
@@ -166,8 +167,9 @@ surveys %>%
   head
 ```
 
-The first few rows are full of NAs, so if we wanted to remove those we could
-insert a `filter()` in this chain:
+첫번째 몇 줄은 `NA` 값으로 가득찬다. `NA` 값을 제거하려면,
+파이프 체인에 `filter()` 함수를 다음과 같이 삽입시킬 수 있다:
+
 
 ```{r, purl = FALSE}
 surveys %>%
@@ -176,18 +178,17 @@ surveys %>%
   head
 ```
 
-`is.na()` is a function that determines whether something is or is not an `NA`.
-The `!` symbol negates it, so we're asking for everything that is not an `NA`.
+`is.na()` 함수는 `NA`가 있는지 없는지 판단하는 함수다.
+`!` 기호는 부정하는 기호로 `NA`가 아닌 모든 것을 찾아낸다.
 
-> ### Challenge {.challenge}
+> ### 도전과제 {.challenge}
 >
->  Create a new dataframe from the survey data that meets the following
->  criteria: contains only the `species_id` column and a column that contains
->  values that are half the `hindfoot_length` values (e.g. a new column
->  `hindfoot_half`). In this `hindfoot_half` column, there are no NA values
->  and all values are < 30.
+>  다음 기준을 만족하는 `survey` 데이터에서 데이터프레임을 새로 생성시킨다:
+>  `species_id` 칼럼과 `hindfoot_length`을 반으로 나누는 값을 포함하는 칼럼만 포함시킨다.
+>  새로운 칼럼명은 `hindfoot_half`이다. 
+>  `hindfoot_half` 칼럼에는 `NA` 값이 없고 모든 값은 `30` 보다 작아야 한다.
 >
->  **Hint**: think about how the commands should be ordered to produce this data frame!
+>  **힌트**: 해법 데이터프레임을 생성하려면 명령어가 어떤 순서로 정렬되어야 하는지 생각해본다!
 
 <!---
 ```{r, eval=FALSE, purl=FALSE}
@@ -200,20 +201,19 @@ surveys_hindfoot_half <- surveys %>%
 ```
 --->
 
-### Split-apply-combine data analysis and the summarize() function
+### 분할-적용-병합 데이터분석과 `summarize()` 함수
 
-Many data analysis tasks can be approached using the "split-apply-combine"
-paradigm: split the data into groups, apply some analysis to each group, and
-then combine the results. `dplyr` makes this very easy through the use of the
-`group_by()` function.
+데이터분석 상당수 작업은 ["split-apply-combine(분할-적용-병합)" 패러다임](https://statkclee.github.io/r-novice-gapminder/12-plyr-kr.html)으로 해결된다:
+데이터를 집단으로 쪼개고, 각 집단별로 특정 분석을 적용시키고 나서, 결과를 병합한다.
+`dplyr` 팩키지는 `group_by()` 함수를 사용해서 이런 유형의 작업을 매우 쉽게 구현한다.
 
 
-#### The `summarize()` function
+#### `summarize()` 요약 함수
 
-`group_by()` is often used together with `summarize()` which collapses each
-group into a single-row summary of that group.  `group_by()` takes as argument
-the column names that contain the **categorical** variables for which you want
-to calculate the summary statistics. So to view mean the `weight` by sex:
+`group_by()` 함수는 `summarize()` 함수와 함께 사용되는데 각 집단을 한줄로
+요약해서 축약하게 된다.
+`group_by()` 함수는 인자로 **범주형** 변수가 포함된 칼럼명을 인자로 받아 요약 통계량을 
+계산하게 된다. 성별로 `weight` 체중을 계산하려면 다음과 같이 R코드를 작성한다:
 
 ```{r, purl = FALSE}
 surveys %>%
@@ -221,7 +221,7 @@ surveys %>%
   summarize(mean_weight = mean(weight, na.rm = TRUE))
 ```
 
-You can group by multiple columns too:
+칼럼 다수를 `group_by()`에 넣어 사용하는 것도 가능하다:
 
 ```{r, purl = FALSE}
 surveys %>%
@@ -229,12 +229,12 @@ surveys %>%
   summarize(mean_weight = mean(weight, na.rm = TRUE))
 ```
 
-When grouping both by "sex" and "species_id", the first rows are for individuals
-that escaped before their sex could be determined and weighted. You may notice
-that the last column does not contain `NA` but `NaN` (which refers to "Not a
-Number"). To avoid this, we can remove the missing values for weight before we
-attempt to calculate the summary statistics on weight. Because the missing
-values are removed, we can omit `na.rm=TRUE` when computing the mean:
+"sex" 와 "species_id" 모두를 집단으로 묶을 때, 첫번째 행은 성별과 체중이 확인되기 전에
+이탈해야 되는 개체다.
+마지막 칼럼은 `NA`가 아니라 `NaN`("Not a Number")가 포함된 것에 주목한다.
+이런 문제를 피해가기 위해서, 체중에 대한 요약 통계량을 산출하기 전에
+체중에 대한 결측값을 제거한다. 결측값이 파이프 앞단에서 제거되었기 때문에,
+평균을 계산할 때 `na.rm=TRUE` 인자를 생략해도 된다:
 
 ```{r, purl = FALSE}
 surveys %>%
@@ -243,14 +243,13 @@ surveys %>%
   summarize(mean_weight = mean(weight))
 ```
 
-You may also have noticed, that the output from these calls don't run off the
-screen anymore. That's because `dplyr` has changed our `data.frame` to a
-`tbl_df`. This is a data structure that's very similar to a data frame; for our
-purposes the only difference is that it won't automatically show tons of data
-going off the screen, while displaying the data type for each column under its
-name. If you want to display more data on the screen, you can add the `print()`
-function at the end with the argument `n` specifying the number of rows to
-display:
+상기 R코드를 실행시키게 되면 출력 결과가 더이상 화면을 뒤덮지 않게 되는 것에 주목한다.
+`dplyr` 팩키지가 `data.frame`을 `tbl_df`로 전환시켰기 때문이다.
+`tbl_df` 데이터프레임은 데이터프레임과 매우 유사하다;
+유용한 점이 여럿 있지만, 지금으로서는 자동으로 출력결과를 화면을 뒤덮지 않고,
+각 칼럼명 아래 자료형을 표현한다는 점이다.
+화면에 더 많은 데이터를 출력하고자 한다면, `print()` 함수에 `n` 인자에 출력하고자 하는 
+행갯수를 지정하면 된다:
 
 
 ```{r, purl = FALSE}
@@ -261,9 +260,8 @@ surveys %>%
   print(n=15)
 ```
 
-Once the data is grouped, you can also summarize multiple variables at the same
-time (and not necessarily on the same variable). For instance, we could add a
-column indicating the minimum weight for each species for each sex:
+데이터가 집단으로 묶이게 되면, 한번에 다수 변수(꼭 변수가 하나일 필요는 없음)를 요약할 수도 있다. 
+예를 들어, 성별로 각 종별로 최소 체중을 나타내는 칼럼을 추가할 수도 있다:
 
 ```{r, purl = FALSE}
 surveys %>%
@@ -274,13 +272,12 @@ surveys %>%
 ```
 
 
+#### 총계 기록하기, 갯수 세기(Tallying)
 
-#### Tallying
-
-When working with data, it is also common to want to know the number of
-observations found for each factor or combination of factors. For this, `dplyr`
-provides `tally()`. For example, if we wanted to group by sex and find the
-number of rows of data for each sex, we would do:
+데이터로 작업할 때, 각 요인별(혹은 다수 요인을 조합)로 관측점 갯수가 몇개가 되는지 확인하는 작업이 흔하다. 
+이런 목적을 달성하는데, `dplyr` 팩키지에 `tally()` 함수가 제공된다.
+예를 들어, 성별로 집단을 묶어 각 성별로 행의 갯수를 세어 총계를 기록하고자 하는 경우,
+R 코드를 다음과 같이 작성한다:
 
 ```{r, purl = FALSE}
 surveys %>%
@@ -288,12 +285,12 @@ surveys %>%
   tally()
 ```
 
-Here, `tally()` is the action applied to the groups created by `group_by()` and
-counts the total number of records for each category.
+이번에, `tally()` 함수는 `group_by()` 함수로 생성된 집단에만 적용된다.
+각 범주별로 전체 레코드 갯수를 세어 총계를 기록한다.
 
-> ### Challenge {.challenge}
+> ### 도전과제 {.challenge}
 >
-> How many individuals were caught in each `plot_type` surveyed?
+>  조사기간 동안 `plot_type` 별로 얼마나 많은 개체가 포획되었나?
 
 <!---
 ```{r, echo=FALSE, purl=FALSE}
@@ -304,10 +301,11 @@ surveys %>%
 ```
 --->
 
-> ### Challenge {.challenge}
+> ### 도전과제 {.challenge}
 >
-> Use `group_by()` and `summarize()` to find the mean, min, and max hindfoot
-> length for each species (using `species _id`).
+> `group_by()` 와 `summarize()` 함수를 사용해서,
+> `hindfoot_length` 후족부 길이에 대한 평균, 최소값, 최대값을 
+> 각 종별(`species _id`)로 묶어 산출하시오.
 
 <!---
 ```{r, echo=FALSE, purl=FALSE}
@@ -323,10 +321,10 @@ surveys %>%
 ```
 --->
 
-> ### Challenge {.challenge}
+> ### 도전과제 {.challenge}
 >
-> What was the heaviest animal measured in each year? Return the columns `year`,
-> `genus`, `species_id`, and `weight`.
+> 매년 측정된 동물 중 가장 무게가 많이 나가는 종은 어떤 것인가?
+> `year`, `genus`, `species_id`, `weight` 칼럼만 뽑아낸다.
 
 <!---
 ## Answer
@@ -340,70 +338,69 @@ res <- surveys %>%
 ```
 --->
 
-# Exporting data
+# 데이터 내보내기
 
-Now that you have learned how to use `dplyr` to extract the information you need
-from the raw data, or to summarize your raw data, you may want to export these
-new datasets to share them with your collaborators or for archival.
+`dplyr` 팩키지를 사용해서 원데이터에서 필요한 정보를 추출하고, 원데이터를 요약하는 
+방법을 학습했기 때문에, 이제 동료와 공유하거나 기록보관 목적으로 새로 작업된 데이터셋을
+내보내자.
 
-Similarly to the `read.csv()` function used to read in CSV into R, there is a
-`write.csv()` function that generates CSV files from data frames.
+CSV 파일을 R로 불러오는데 사용된 `read.csv()` 함수와 유사하게,
+데이터프레임에서 CSV 파일을 생성시키는데 `write.csv()` 함수가 존재한다.
 
-Before using it, we are going to create a new folder, `data_output` in our
-working directory that will store this generated dataset. We don't want to write
-generated datasets in the same directory as our raw data. It's good practice to
-keep them separate. The `data` folder should only contain the raw, unaltered
-data, and should be left alone to make sure we don't delete or modify it; on the
-other end the content of `data_output` directory will be generated by our
-script, and we know that we can delete the files it contains because we have the
-script that can re-generate these files.
+`write.csv()` 함수를 사용하기 앞서, 현재 작업디렉토리에 생성된 데이터셋을 저장할
+디렉토리를 `data_output` 이름으로 생성한다.
+원데이터와 동일한 디렉토리에 생성시킨 데이터셋이 겹쳐쓰는 것은 바람직하지 못하다.
+원데이터와 작업결과 데이터를 구분하여 분리시키는 것은 좋은 습관이 된다.
+`data` 디렉토리에는 원데이터, 변경되지 않는 데이터만 보관해야 한다.
+이를 통해서 데이터가 삭제되거나 변경되지 않도록 별도 관리한다;
+이와는 달리 `data_output` 디렉토리에는 스크립트로 생성된 데이터를 보관해서 
+필요에 따라 삭제해도 되는데 이유는 다시 데이터를 생성시킬 수 있는 스크립트 R코드가 있기 때문이다.
 
-In preparation for our next lesson on plotting, we are going to prepare a
-cleaned up version of the dataset that doesn't include any missing data.
+다음 학습, 시각화를 위해서, 결측값이 없이 정제된 데이터셋을 준비한다.
 
-Let's start by removing observations for which the `species_id` is missing. In
-this dataset, the missing species are represented by an empty string and not an
-`NA`. Let's also remove observations for which `weight` and the
-`hindfoot_length` are missing. This dataset will also only contain observations
-of animals for which the sex has been determined:
+`species_id` 칼럼에 결측값을 갖는 관측점은 모두 제거한다.
+데이터셋에서 결측된 종족은 빈 문자열 혹은 `NA`로 표현되어 있다.
+`weight` 와 `hindfoot_length`에도 결측값이 있는 것을 제거한다. 
+데이터셋에는 성별이 파악된 동물에 대한 관측점만이 담겨지게 된다:
 
 
 ```{r, purl=FALSE}
 surveys_complete <- surveys %>%
-  filter(species_id != "",         # remove missing species_id
-         !is.na(weight),           # remove missing weight
-		 !is.na(hindfoot_length),  # remove missing hindfoot_length
-		 sex != "")                # remove missing sex
+  filter(species_id != "",         # 빈문자열을 갖는 species_id 제거
+         !is.na(weight),           # weight 결측값 제거
+		     !is.na(hindfoot_length),  # hindfoot_length 결측값 제거
+		     sex != "")                # 빈문자열을 갖는 sex 제거
 ```
 
-Because we are interested in plotting how species abundances have changed
-through time, we are also going to remove observations for rare species (i.e.,
-that have been observed less than 50 times). We will do this in two steps: first
-we are going to create a dataset that counts how often each species has been
-observed, and filter out the rare species; then, we will extract only the
-observations for these more common species:
+시간에 따른 종종별 번성을 시각화하는데 관심이 있기 때문에,
+희귀종에 대한 관측점을 제거한다(즉, 관측값이 50보다 적은 종족)
+두단계에 걸쳐 이 작업을 수행한다: 첫번째로 각 종별로 얼마나 많이 관측되었는지
+횟수 정보가 담긴 데이터셋을 생성하고 희귀종을 제거하고 나서 
+일반적으로 흔한 종에 해당되는 관측점만 추출한다:
+
 
 ```{r, purl=FALSE}
-## Extract the most common species_id
+## 일반적으로 흔한 species_id만 추출
 species_counts <- surveys_complete %>%
                   group_by(species_id) %>%
                   tally %>%
 				  filter(n >= 50) %>%
 				  select(species_id)
 
-## Only keep the most common species
+## 가장 많이 관측되는 종만 추출
 surveys_complete <- surveys_complete %>%
                  filter(species_id %in% species_counts$species_id)
 ```
 
-To make sure that everyone has the same dataset, check that
-`surveys_complete` has `r nrow(surveys_complete)` rows and `r ncol(surveys_complete)`
-columns by typing `dim(surveys_complete)`.
+학습참여자 모두 동일한 데이터셋인지 점검한다. 
+`surveys_complete` 데이터프레임은 행갯수가 `r nrow(surveys_complete)`, 
+열갯수가 `r ncol(surveys_complete)`이면 된다. 
+`dim(surveys_complete)` 타이핑하면 확인이 가능하다.
 
-Now that our dataset is ready, we can save it as a CSV file in our `data_output`
-folder. By default, `write.csv()` includes a column with row names (in our case
-the names are just the row numbers), so we need to add `row.names = FALSE` so
-they are not included:
+이제 데이터셋이 준비되어, `data_output` 디렉토리에 CSV 파일로 저장한다.
+기본디폴트 설정으로, `write.csv()` 함수는 행명칭(row names)이 포함된 칼럼을 포함한다.
+(이번 경우에는 행명칭이 행번호). 따라서, 그다지 유용한 정보가 아니라 
+행명은 `row.names = FALSE`로 포함시키지 않는다:
 
 ```{r, purl=FALSE, eval=FALSE}
 write.csv(surveys_complete, file="data_output/surveys_complete.csv",
