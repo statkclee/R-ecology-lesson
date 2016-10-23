@@ -1,11 +1,12 @@
 ---
 layout: topic
-title: `data.frame` 클래스 소개
+title: data.frame 클래스 소개
 author: Data Carpentry contributors
 minutes: 30
 ---
 
 ```{r, echo=FALSE, purl=FALSE, message = FALSE}
+setwd("~/Dropbox/01_data_science/datacarpentry/R-ecology-lesson")
 source("setup.R")
 surveys <- read.csv("data/portal_data_joined.csv")
 ```
