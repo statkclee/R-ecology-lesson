@@ -274,7 +274,7 @@ RStudio 자동완성 기능을 사용하면, 오탈자 없는 전체 칼럼명�
 ###   that behavior with the `-` notation above to reproduce the behavior of `head(surveys)`
 ###   excluding the 7th through final row of the `surveys` dataset.
 ```
-
+ 
 <!---
 ```{r, purl=FALSE}
 ## Answers
