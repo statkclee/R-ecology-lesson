@@ -12,100 +12,96 @@ source("setup.R")
 
 ------------
 
-> ## Learning Objectives
+> ## 학습 목표
 >
-> * Familiarize participants with R syntax
-> * Understand the concepts of objects and assignment
-> * Understand the concepts of vector and data types
-> * Get exposed to a few functions
+> * 학습참여자가 R 구문에 친숙해짐
+> * 객체와 대입 개념을 이해한다.
+> * 벡터와 자료형 개념을 이해한다.
+> * 함수 일부에 자연히 노출시킴.
 
 ------------
 
 
-## Creating objects
+## 객체 생성
 
 ```{r, echo=FALSE, purl=TRUE}
 ### Creating objects in R
-
 ```
 
-You can get output from R simply by typing in math in the console
+콘솔창에 수학연산을 타이핑해서 출력값을 얻을 수 있다.
 
 ```{r, purl=FALSE}
 3 + 5
 12/7
 ```
 
-However, to do useful and interesting things, we need to assign _values_ to
-_objects_. To create an object, we need to give it a name followed by the
-assignment operator `<-`, and the value we want to give it:
+하지만, 유용하고 흥미로운 작업을 수행하려면, _객체(object)_에 _값(value)_을 대입할 필요가 있다.
+객체를 생성하려면, 객체명을 부여하고 나서 대입연산자 `<-`를 타이핑하고 나서 객체에 부여할 
+값을 타이핑한다:
 
 ```{r, purl=FALSE}
 weight_kg <- 55
 ```
 
-Objects can be given any name such as `x`, `current_temperature`, or
-`subject_id`. You want your object names to be explicit and not too long. They
-cannot start with a number (`2x` is not valid, but `x2` is). R is case sensitive
-(e.g., `weight_kg` is different from `Weight_kg`). There are some names that
-cannot be used because they are the names of fundamental functions in R (e.g.,
-`if`, `else`, `for`, see
-[here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html)
-for a complete list). In general, even if it's allowed, it's best to not use
-other function names (e.g., `c`, `T`, `mean`, `data`, `df`, `weights`). In doubt
-check the help to see if the name is already in use. It's also best to avoid
-dots (`.`) within a variable name as in `my.dataset`. There are many functions
-in R with dots in their names for historical reasons, but because dots have a
-special meaning in R (for methods) and other programming languages, it's best to
-avoid them. It is also recommended to use nouns for variable names, and verbs
-for function names. It's important to be consistent in the styling of your code
-(where you put spaces, how you name variable, etc.). In R, two popular style
-guides are [Hadley Wickham's](http://adv-r.had.co.nz/Style.html) and
+객체는 `x`, `current_temperature`, `subject_id` 처럼 어떤 명칭도 부여될 수 있다.
+객체명을 명시적이고 너무 길지 않게 부여한다.
+하지만, 숫자로 시작하면 안된다(`2x`는 부적합, 하지만 `x2`은 적합).
+R은 대소문자를 구별한다(즉, `weight_kg`은 `Weight_kg`와 다르다).
+일부 명칭은 사용될 수 없는데 이유는 R에 내장된 기본적인 함수명이기 때문이다
+(즉, `if`, `else`, `for`, 자세한 내용은 
+[R 예약어](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html)를 참조한다).
+일반적으로, 허락되기도 하지만, 다른 함수명은 사용하지 않는 것이 최선이다
+(즉, `c`, `T`, `mean`, `data`, `df`, `weights`). 변수명 사용이 꺼름직하면,
+도움말을 확인해서 명칭이 이미 점유되었는지 확인한다. 
+또한, `.` 점표기법도 변수명내부에 `my.dataset`처럼 사용하는 것을 피한다.
+역사적인 이유로 함수명에 점을 갖는 함수가 많이 존재하지만,
+점표기법은 R과 다른 프로그래밍 언어에서 메쏘드(method)로 특수한 의미를 갖기 때문에, 
+가능하면 피하는 것이 최선이다. 변수명에는 명사를 함수명에는 동사를 사용하는 것을 추천한다.
+코드를 작성할 때 스타일에 일관성(공백 위치, 변수명 등)을 유지하는 것이 중요하다.
+R에는 두가지 일반적인 코딩 스타일 지침이 존재한다: [Hadley Wickham's](http://adv-r.had.co.nz/Style.html), 
 [Google's](https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml).
 
-When assigning a value to an object, R does not print anything. You can force to
-print the value by using parentheses or by typing the name:
+값을 객체에 대입할 때 R은 어떤 것도 출력하지 않는다. 값을 출력하려면 괄호로 감싸거나 
+객체명을 타이핑한다:
 
 ```{r, purl=FALSE}
-weight_kg <- 55    # doesn't print anything
-(weight_kg <- 55)  # but putting parenthesis around the call prints the value of `weight_kg`
-weight_kg          # and so does typing the name of the object
+weight_kg <- 55    # 출력결과 없음.
+(weight_kg <- 55)  # 괄호로 감싸게 되면 `weight_kg` 값을 출력함.
+weight_kg          # 객체명을 타이핑하면 출력됨
 ```
 
-Now that R has `weight_kg` in memory, we can do arithmetic with it. For
-instance, we may want to convert this weight in pounds (weight in pounds is 2.2
-times the weight in kg):
+`weight_kg` 객체가 메모리에 올라갔기 때문에, 사칙연산을 수행할 수 있다.
+예를 들어 파운드 무게를 변환할 수 있다(파운드 무게는 kg에 2.2 를 곱하면 된다):
 
 ```{r, purl=FALSE}
 2.2 * weight_kg
 ```
 
-We can also change a variable's value by assigning it a new one:
+변수에 저장된 값을 변경하려면 변수에 새로운 값을 대입한다:
 
 ```{r, purl=FALSE}
 weight_kg <- 57.5
 2.2 * weight_kg
 ```
 
-This means that assigning a value to one variable does not change the values of
-other variables.  For example, let's store the animal's weight in pounds in a new
-variable, `weight_lb`:
+특정 변수에 값을 대입하게 되면 다른 변수의 값은 변경되지 않는 것을 의미한다.
+예를 들어 새로운 변수로 파운드 단위를 갖는 동물 무게를 저장한다, `weight_lb`:
 
 ```{r, purl=FALSE}
 weight_lb <- 2.2 * weight_kg
 ```
 
-and then change `weight_kg` to 100.
+그리고 나서, `weight_kg` 를 100 으로 변경시킨다.
 
 ```{r, purl=FALSE}
 weight_kg <- 100
 ```
 
-What do you think is the current content of the object `weight_lb`? 126.5 or 200?
+객체 `weight_lb`의 현재 담긴 정보는 어떻게 될까? 126.5 혹은 200?
 
-### Challenge
+### 도전과제
 
-What are the values after each statement in the following?
+다음 명령어를 각각 실행시킨 뒤에 값은 각각 얼마일까?
 
 ```{r, purl=FALSE}
 mass <- 47.5            # mass?
@@ -115,93 +111,90 @@ age  <- age - 20        # age?
 mass_index <- mass/age  # mass_index?
 ```
 
-## Vectors and data types
+## 벡터와 자료형
 
 ```{r, echo=FALSE, purl=TRUE}
 ### Vectors and data types
 ```
 
-A vector is the most common and basic data structure in R, and is pretty much
-the workhorse of R. It's a group of values, mainly either numbers or
-characters. You can assign this list of values to a variable, just like you
-would for one item. For example we can create a vector of animal weights:
+벡터는 R에서 가장 흔하고 기본적인 자료구조로 R의 상당부분 업무를 처리한다.
+벡터는 값을 그룹으로 묶은 것으로 주로 숫자거나 문자다.
+한 항목에 대해 수행했듯이, 이런 값목록을 변수에 대입한다.
+예를 들어, 다음과 같이 동물 무게를 측정한 벡터를 생성할 수 있다: 
 
 ```{r, purl=FALSE}
 weight_g <- c(50, 60, 65, 82)
 weight_g
 ```
 
-A vector can also contain characters:
+벡터는 문자를 담을 수도 있다:
 
 ```{r, purl=FALSE}
 animals <- c("mouse", "rat", "dog")
 animals
 ```
 
-There are many functions that allow you to inspect the content of a
-vector. `length()` tells you how many elements are in a particular vector:
+벡터에 담긴 내용물을 검사할 수 있는 함수가 많다.
+`length()` 함수는 특정 벡터에 얼마나 많은 원소가 담겨있는지 일러준다:
 
 ```{r, purl=FALSE}
 length(weight_g)
 length(animals)
 ```
 
-An important feature of a vector, is that all of the elements are the same type of data.
-The function `class()` indicates the class (the type of element) of an object:
+벡터의 중요한 특징은 모든 원소가 동일한 자료형이라는 점이다.
+`class()` 함수는 객체에 대한 클래스(원소 자료형)를 확인하는 데 사용된다:
 
 ```{r, purl=FALSE}
 class(weight_g)
 class(animals)
 ```
 
-The function `str()` provides an overview of the object and the elements it
-contains. It is a really useful function when working with large and complex
-objects:
+`str()` 함수는 객체에 대한 개요와 객체에 담긴 원소정보를 제공한다.
+매우 크고 복잡한 객체를 작업할 때 정말 유용한 함수다:
 
 ```{r, purl=FALSE}
 str(weight_g)
 str(animals)
 ```
 
-You can add elements to your vector by using the `c()` function:
+원소를 벡터에 추가할 때 `c()` 함수를 사용한다:
 
 ```{r, purl=FALSE}
-weight_g <- c(weight_g, 90) # adding at the end of the vector
-weight_g <- c(30, weight_g) # adding at the beginning of the vector
+weight_g <- c(weight_g, 90) # 벡터 끝에 원소를 추가한다.
+weight_g <- c(30, weight_g) # 벡터 시작점에 원소를 추가한다.
 weight_g
 ```
 
-What happens here is that we take the original vector `weight_g`, and we are
-adding another item first to the end of the other ones, and then another item at
-the beginning. We can do this over and over again to grow a vector, or assemble
-a dataset. As we program, this may be useful to add results that we are
-collecting or calculating.
+앞서 작성한 것을 설명하면, 최초 `weight_g` 벡터를 잡아 끝에 원소를 하나 추가하고 나서
+시작점에 또다른 원소를 추가했다. 벡터를 키워 나가거나 데이터셋을 조합하는데 반복적으로 
+이런 작업을 수행한다. 프로그래밍을 하면서 계산을 하거나 수집을 하는 방법으로 
+결과를 추가하는 유용하다.
 
-We just saw 2 of the 6 **atomic vector** types that R uses: `"character"` and
-`"numeric"`. These are the basic building blocks that all R objects are built
-from. The other 4 are:
+지금까지 R에서 사용되는 6가지 **원자벡터(atomic vector)** 중에서 두가지를 살펴봤다:
+문자형(`"character"`) 와 숫자형(`"numeric"`).
+모든 R 객체를 만들어내는 기본적인 레고 블록이고, 나머지 4개는 다음과 같다:
 
-* `"logical"` for `TRUE` and `FALSE` (the boolean data type)
-* `"integer"` for integer numbers (e.g., `2L`, the `L` indicates to R that it's an integer)
-* `"complex"` to represent complex numbers with real and imaginary parts (e.g.,
-  `1+4i`) and that's all we're going to say about them
-* `"raw"` that we won't discuss further
+* 논리형(`"logical"`): 참(`TRUE`)과 거짓(`FALSE`), 부울 자료형
+* 정수형(`"integer"`): 정수 (즉, `2L`, `L` 은 R에 명시적으로 정수라고 표현)
+* 복소수형(`"complex"`): 실수부와 정수부를 갖는 복소수 표현(즉,
+  `1+4i`), 그리고 복소수형에 대해서는 이것이 이번 워크샵에서 전부임.
+* 원자료형(`"raw"`): 더이상 다루지는 않을 것임.
 
-Vectors are one of the many **data structures** that R uses. Other important
-ones are lists (`list`), matrices (`matrix`), data frames (`data.frame`) and
-factors (`factor`).
-
-
-### Challenge
+벡터는 R에서 사용되는 가장 흔한 **자료구조(data structure)** 중 하나.
+중요하게 다뤄지는 다른 자료구조는 리스트(`list`), 행렬(`matrix`), 데이터프레임(`data.frame`),
+요인(`factor`)이 있음.
 
 
-* **Question**: We’ve seen that atomic vectors can be of type character,
-  numeric, integer, and logical. But what happens if we try to mix these types in
-  a single vector?
-<!-- * _Answer_: R implicitly converts them to all be the same type -->
+### 도전과제
 
-* **Question**: What will happen in each of these examples? (hint: use `class()`
-  to check the data type of your objects):
+
+* **질문**: 원자벡터는 문자형, 숫자형, 정수형, 논리형이 가능함을 살펴봤다.
+            그런데 벡터 하나에 다양한 자료형을 뒤섞으면 어떻게 될까?
+<!-- * _Answer_: 묵시적으로 R에서 벡터 하나에 모든 원소는 동일한 자료형으로 변환됨. -->
+
+* **질문**: 다음 예제를 실행 시키면 자료형은 어떻게 변하게 될까? (힌트: `class()`
+	명령어를 사용해서 객체 자료형을 검사한다):
 
 ```r
 num_char <- c(1, 2, 3, 'a')
@@ -210,12 +203,11 @@ char_logical <- c('a', 'b', 'c', TRUE)
 tricky <- c(1, 2, 3, '4')
 ```
 
-* **Question**: Why do you think it happens?
-<!-- * _Answer_: Vectors can be of only one data type. R tries to convert (=coerce)
-  the content of this vector to find a "common denominator". -->
+* **Question**: 변형된 자료형에 대해 이유를 설명할 수 있는가?
+<!-- * _정답_: 벡터는 단지 한가지 자료형만 갖을 수 있다.
+   R은 내부적으로 "최대공약수"를 찾아 벡터 내용물을 (강제)변환한다.-->
 
-* **Question**: Can you draw a diagram that represents the hierarchy of the data
-  types?
+* **질문**: 자료구조의 위계를 도식적으로 표현할 수 있는가?
 <!-- * _Answer_: `logical -> numeric -> character <-- logical` -->
 
 ```{r, echo=FALSE, eval=FALSE, purl=TRUE}
@@ -240,10 +232,10 @@ tricky <- c(1, 2, 3, '4')
 ```
 
 
-## Subsetting vectors
+## 벡터 부분집합 뽑아내기
 
-If we want to extract one or several values from a vector, we must provide one
-or several indices in square brackets. For instance:
+벡터에서 값을 하나 혹은 다수 값을 추출하려면, 
+꺾쇠 괄호 내부에 인덱스 하나 혹은 다수 인덱스를 넣어 뽑아낸다. 예를 들어:
 
 ```{r, results='show', purl=FALSE}
 animals <- c("mouse", "rat", "dog", "cat")
@@ -251,61 +243,60 @@ animals[2]
 animals[c(3, 2)]
 ```
 
-We can also repeat the indices to create an object with more elements than the
-original one:
+인덱스를 반복해서 원벡터에서 더 많은 원소를 갖는 객체를 생성할 수도 있다:
 
 ```{r, results='show', purl=FALSE}
 more_animals <- animals[c(1, 2, 3, 2, 1, 4)]
 more_animals
 ```
 
-R indexes start at 1. Programming languages like Fortran, MATLAB, and R start
-counting at 1, because that's what human beings typically do. Languages in the C
-family (including C++, Java, Perl, and Python) count from 0 because that's
-simpler for computers to do.
+R 인덱스는 **1**에서 시작된다. 포트란, 매트랩, R 프로그래밍 언어는 1 에서 
+인덱스를 시작하는데, 이유는 일반적으로 사람과 동일한 방식을 취한다.
+프로그래밍 언어가 C 가족(C++, 자바, 펄(Perl), 파이썬)에 포함된 언어는 0 에서 시작하는데, 이유는 
+컴퓨터가 작업하는데 쉽기 때문이다. 
 
-### Conditional subsetting
 
-Another common way of subsetting is by using a logical vector: `TRUE` will
-select the element with the same index, while `FALSE` will not:
+### 조건을 활용한 부분집합 뽑아내기
+
+부분집합을 뽑아내는 다르게 흔히 사용되는 방식은 논리 벡터를 활용한 것이다:
+`TRUE`값을 갖는 인덱스는 뽑아내고, `FALSE` 값을 갖는 인덱스는 추출하지 않는다.
 
 ```{r, results='show', purl=FALSE}
 weight_g <- c(21, 34, 39, 54, 55)
 weight_g[c(TRUE, FALSE, TRUE, TRUE, FALSE)]
 ```
 
-Typically, these logical vectors are not typed by hand, but are the output of
-other functions or logical tests. For instance, if you wanted to select only the
-values above 50:
+일반적으로, 이런 논리형 벡터를 손으로 일일이 타이핑하지는 않고,
+다른 함수나 논리적 테스트 결과로 나온 것을 받아 사용한다.
+예를 들어, 무게가 50 이상되는 것만 추출하려면 다음과 같이 명령식을 구성한다:
 
 ```{r, results='show', purl=FALSE}
-weight_g > 50    # will return logicals with TRUE for the indices that meet the condition
-## so we can use this to select only the values above 50
+weight_g > 50    # 조건이 만족되는 인덱스에 대해서만 TRUE를 갖는 논리벡터를 반환한다.
+## 그래서, 이를 활용하여 50 이상이 되는 값만 선택한다.
 weight_g[weight_g > 50]
 ```
 
-You can combine multiple tests using `&` (both conditions are true, AND) or `|`
-(at least one of the conditions is true, OR):
+`&` (양쪽 조건이 모두 참, AND) 혹은 `|` (양쪽 조건 중 적어도 하나는 참, OR)을 
+조합해서 다수 테스트를 조합한다:
 
 ```{r, results='show', purl=FALSE}
 weight_g[weight_g < 30 | weight_g > 50]
 weight_g[weight_g >= 30 & weight_g == 21]
 ```
 
-When working with vectors of characters, if you are trying to combine many
-conditions it can become tedious to type. The function `%in%` allows you to test
-if a value is found in a vector:
+문자형 벡터를 작업할 때, 다수 조건식을 조합하려면, 타이핑하는 것이 너무 많다.
+`%in%` 함수를 사용해서 특정 값이 벡터에 포함되어 있는지 테스트하면 편리하다:
 
 ```{r, results='show', purl=FALSE}
 animals <- c("mouse", "rat", "dog", "cat")
-animals[animals == "cat" | animals == "rat"] # returns both rat and cat
+animals[animals == "cat" | animals == "rat"] # rat, cat을 반환
 animals %in% c("rat", "cat", "dog", "duck")
 animals[animals %in% c("rat", "cat", "dog", "duck")]
 ```
 
-> ### Challenge {.challenge}
+> ### 도전과제 {.challenge}
 >
-> * Can you figure out why `"four" > "five"` returns `TRUE`?
+> * `"four" > "five"` 표현식이 왜 `TRUE`를 반환할까요?
 
 ```{r, echo=FALSE, purl=TRUE}
 # * Can you figure out why `"four" > "five"` returns `TRUE`?
@@ -321,21 +312,22 @@ animals[animals %in% c("rat", "cat", "dog", "duck")]
 
 
 
-## Missing data
+## 결측 데이터
 
-As R was designed to analyze datasets, it includes the concept of missing data
-(which is uncommon in other programming languages). Missing data are represented
-in vectors as `NA`.
+R은 데이터셋을 분석하도록 설계되어서, 결측 데이터 개념이 포함되어 있다
+(다른 프로그래밍 언어에서는 일반적이지 않음).
+결측 데이터를 벡터로 표현하면 `NA`가 된다.
 
 ```{r, purl=FALSE}
 planets <- c("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus",
              "Neptune", NA)
 ```
 
-When doing operations on numbers, most functions will return `NA` if the data
-you are working with include missing values. It is a safer behavior as otherwise
-you may overlook that you are dealing with missing data. You can add the
-argument `na.rm=TRUE` to calculate the result while ignoring the missing values.
+숫자에 연산작업을 수행할 때, 
+데이터에 결측값이 포함되어 작업이 수행되면 `NA`가 반환된다.
+이런 작업결과 반환이 더 안전한 기계적 움직임이 되는데 이유는 그렇지 않고 
+조용히 넘어가면 결측값을 포함해서 처리하는지 알수 없기 때문이다.
+`na.rm=TRUE` 인자를 추가하면, 결측값을 무시하고 결과를 계산하게 된다.
 
 ```{r, purl=FALSE}
 heights <- c(2, 4, 4, NA, 6)
@@ -345,34 +337,33 @@ mean(heights, na.rm = TRUE)
 max(heights, na.rm = TRUE)
 ```
 
-If your data include missing values, you may want to become familiar with the
-functions `is.na()`, `na.omit()`, and `complete.cases()`. See below for
-examples.
+데이터에 결측값이 포함되어 있다면, `is.na()`, `na.omit()`, `complete.cases()` 함수와 
+곧 친숙하게 된다. 예제로 아래를 참조한다.
 
 
 ```{r, purl=FALSE}
-## Extract those elements which are not missing values.
+## 결측값이 없는 원소만 추출한다.
 heights[!is.na(heights)]
 
-## Returns the object with incomplete cases removed. The returned object is atomic.
+## 완비되지 않는 사례는 제거된 객체를 반환한다. 반환된 객체는 원자형.
 na.omit(heights)
 
-## Extract those elements which are complete cases.
+## 완비된 사례만 갖는 원소를 추출한다.
 heights[complete.cases(heights)]
 ```
 
 
-### Challenge
+### 도전과제
 
-* **Question**: Why does the following piece of code give an error message?
+* **질문**: 다음 코드는 왜 오류 메시지가 출력이 될까요?
 ```{r, purl=FALSE}
 sample <- c(2, 4, 4, "NA", 6)
 mean(sample, na.rm = TRUE)
 ```
 <!-- * _Answer_: Because R recognizes the NA in quotes as a character. -->
 
-* **Question**: Why does the error message say the argument is not numeric?
+* **질문**: 오류 메시지에 왜 인자가 숫자형이 아니라고 언급되었을까요?
 <!-- * _Answer_: R converts the entire vector to character because of the "NA", and doesn't recognize it as numeric. -->
 
-Next, we will use the "surveys" dataset to explore the `data.frame` data
-structure, which is one of the most common types of R objects.
+다음 시간에, "surveys" 데이터셋을 사용해서 `data.frame` 자료구조를 탐색하게 된다.
+데이터프레임은 가장 흔한 자료구조 R 객체 중 하나다.
