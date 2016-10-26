@@ -171,19 +171,19 @@ $(document).ready(function () {
 </div>
 <div id="rstudio-" class="section level1">
 <h1>RStudio 소개</h1>
-<p>Let’s start by learning about <a href="https://www.rstudio.com/">RStudio</a>, the Integrated Development Environment (IDE).</p>
-<p>The RStudio IDE open source product is free under the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">Affero General Public License (AGPL) v3</a>. RStudio IDE is also available with a commercial license and priority email support from RStudio, Inc.</p>
-<p>We will use RStudio IDE to write code, navigate the files found on our computer, inspect the variables we are going to create, and visualize the plots we will generate. RStudio can also be used for other things (e.g., version control, developing packages, writting Shiny apps) that we will not cover during the workshop.</p>
-<p>RStudio is divided into 4 “Panes”: the editor for your scripts and documents (top-left, in the default layout), the R console (bottom-left), your environment/history (top-right), and your files/plots/packages/help/viewer (bottom-right). The placement of these panes and their content can be customized (see menu, RStudio -&gt; Preferences -&gt; Pane Layout). One of the advantages of using RStudio is that all the information you need to write code is available in a single window. Additionally, with many shortcuts, autocompletion, and highlighting for the major file types you use while developing in R, RStudio will make typing easier and less error-prone.</p>
+<p><a href="https://www.rstudio.com/">RStudio</a>(통합개발환경 Integrated Development Environment, IDE)에 대한 학습을 시작해보자.</p>
+<p>RStudio IDE는 <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">Affero General Public License (AGPL) v3</a> 라이선스 아래 오픈소스 형태로 자유로이 사용이 가능하다.</p>
+<p>RStudio IDE를 사용해서 코드를 작성하고, 컴퓨터에 저장된 파일을 탐색하고, 생성할 변수를 조사하고, 그래프 플롯을 시각화한다. RStudio를 다른 목적으로도 자주 사용된다(즉, 버젼 제어, 팩키지 개발, Shiny 웹앱 개발 등), 하지만 금번 워크샵에서는 이런 내용을 다루지 않는다.</p>
+<p>RStudio는 4개 창(“Pane”)으로 나눠진다: 스크립트와 문서를 작성하는데 사용되는 편집기(기본 설정화면에서, 좌측 상단), R 콘솔(좌측 하단), 환경/이력(우측 상단), 파일/플롯/팩키지/도움말/뷰어(우측 하단). 창 4개 위치와 내부 콘텐츠는 사용자 환경에 맞춰 조정을 할 수 있다 (메뉴에서, RStudio → Preferences → Pane Layout). RStudio를 사용하는 장점중 하나는 코드를 작성하는데 필요한 모든 정보가 창 하나에서 찾아볼 수 있다는 점이다. 추가적으로, 다양한 단축키 지원, 자동완성기능, R로 작업할 때 주요 파일형식에 따라 주요 키워드에 대한 강조 하이라이트 기능을 제공함으로써, RStudio를 활용함으로써 타이핑을 수월하게 하고 오류를 줄일 수 있게 된다.</p>
 </div>
-<div id="interacting-with-r" class="section level1">
-<h1>Interacting with R</h1>
-<p>The basis of programming is that we write down instructions for the computer to follow, and then we tell the computer to follow those instructions. We write, or <em>code</em>, instructions in R because it is a common language that both the computer and we can understand. We call the instructions <em>commands</em> and we tell the computer to follow the instructions by <em>executing</em> (also called <em>running</em>) those commands.</p>
-<p>There are two main ways of interacting with R: using the console or by using script files (plain text files that contain your code). We want our code and workflow to be reproducible. In other words, we want to write code in a way that anyone can easily replicate, such they can obtain the same results from our code on their computer.</p>
-<p>The console pane (in RStudio, the bottom left panel) is the place where R is waiting for you to tell it what to do, and where it will show the results of a command that has been executed. You can type commands directly into the console and press <code>Enter</code> to execute those commands, but they will be forgotten when you close the session. It is better to enter the commands in the script editor, and save the script. This way, you have a complete record of what you did, you can easily show others how you did it and you can do it again later on if needed. RStudio allows you to execute commands directly from the script editor by using the <kbd><code>Ctrl</code></kbd> + <kbd><code>Enter</code></kbd> shortcut. The command on the current line in the script or all of the commands in the currently selected text will be sent to the console and executed when you press <kbd><code>Ctrl</code></kbd> + <kbd><code>Enter</code></kbd>.</p>
-<p>At some point in your analysis you may want to check the content of variable or the structure of an object, without necessarily keep a record of it in your script. You can type these commands and execute them directly in the console. RStudio provides the <kbd><code>Ctrl</code></kbd> + <kbd><code>1</code></kbd> and <kbd><code>Ctrl</code></kbd> + <kbd><code>2</code></kbd> shortcuts allow you to jump between the script and the console windows.</p>
-<p>If R is ready to accept commands, the R console shows a <code>&gt;</code> prompt. If it receives a command (by typing, copy-pasting or sent from the script editor using <kbd><code>Ctrl</code></kbd> + <kbd><code>Enter</code></kbd>), R will try to execute it, and when ready, show the results and come back with a new <code>&gt;</code>-prompt to wait for new commands.</p>
-<p>If R is still waiting for you to enter more data because it isn’t complete yet, the console will show a <code>+</code> prompt. It means that you haven’t finished entering a complete command. This is because you have not ‘closed’ a parenthesis or quotation, i.e. you don’t have the same number of left-parentheses as right-parentheses, or the same number of opening and closing quotation marks. If you’re in RStudio and this happens, click inside the console window and press <code>Esc</code>; this will cancel the incomplete command and return you to the <code>&gt;</code> prompt.</p>
+<div id="r-" class="section level1">
+<h1>R과 상호작용</h1>
+<p>프로그래밍 기본은 컴퓨터가 수행할 명령어를 작성하고 나서, 컴퓨터가 작성된 명령을 수행하도록 지시를 하는 것이다. R로 코드를 작성 혹은 <em>코딩</em>하는데 이유는 컴퓨터와 사람이 모두 이해할 수 있는 공통된 언어이기 때문이다. 지시사항(instruction)을 <em>명령어(command)</em>라고 부르며, 명령어를 <em>실행(executing)</em>해서 지시사항을 컴퓨터가 따르도록 명령을 내린다.</p>
+<p>R과 인터랙티브하게 상호작업하는 방식은 두가지가 존재한다: 콘솔을 사용하거나, 스크립트 파일(코드를 포함한 일반적인 텍스트 파일)을 활용하는 것이다. 코드와 작업흐름이 재현가능해야만 한다. 다르게 표현하면, 누구나 쉽게 복제할 수 있는 방식으로 코드를 작성해서 누군가의 컴퓨터에서도 코드를 돌리면 동일한 결과를 얻을 수 있어야 한다.</p>
+<p>콘솔창(RStudio를 실행하면 좌측 하단창)은 사용자가 명령을 내리면 바로 실행할 수 있도록 대기하고 있고, 명령어가 실행되면 실행결과가 보여지는 장소이기도 하다. 콘솔창에 명령어를 바로 타이핑하고 <code>엔터(Enter)</code>키를 쳐서 명령어를 실행한다. 하지만 세션을 끊게 되면 콘솔창에 입력한 명령어와 실행결과는 사라진다. 스크립트 편집기에서 명령어를 작성하고 나서 스크립트로 저장하는 것이 더 낫다. 이렇게 하면, 작업한 것에 대한 온전한 기록을 보존할 수 있어서, 다른 사람들에게 작업한 방식을 보여줄 수도 있고, 필요하면 나중에 작성한 본인이 다시 작업하는데 활용할 수 있다. RStudio에서 <kbd><code>Ctrl</code></kbd> + <kbd><code>Enter</code></kbd> 단축키를 사용하면, 스크립트 편집기에서 직접 명령어를 실행할 수 있다. 스크립트에서 커서가 위치한 현재 라인, 혹은 현재 선택한 모든 명령어를 콘솔창에 바로 보내 실행하는데 <kbd><code>Ctrl</code></kbd> + <kbd><code>Enter</code></kbd> 단축키를 사용한다.</p>
+<p>분석을 진행하다면 특정 시점에, 변수에 들어있는 내용 혹은 객체 구조를 살펴볼 필요가 있는데, 이런 경우 반듯이 스크립트에 코드로 기록할 필요는 없다. 콘솔창에서 직접 명령어를 타이핑하고 명령어를 실행하는 것이 가능하다. RStudio에서 <kbd><code>Ctrl</code></kbd> + <kbd><code>1</code></kbd> 과 <kbd><code>Ctrl</code></kbd> + <kbd><code>2</code></kbd> 단축키를 눌러 스크립트 창과 콘솔창을 바로 이동할 수 있다.</p>
+<p>R이 명령어를 받아들일 준비가 된다면, R 콘솔창에 <code>&gt;</code> 프롬프트가 보여지게 된다. 명령어를 R에서 받게 되면(타이핑하거나, 복사해서 붙여넣거나 <kbd><code>Ctrl</code></kbd> + <kbd><code>Enter</code></kbd> 단축키를 눌러 편집기 창에서 전송), R이 실행하게 되고, 준비되면 결과를 보여주고 <code>&gt;</code> 프롬프트가 다시 나타나서 새로운 명령어를 받을 준비가 되었음을 보여준다.</p>
+<p>명령어가 아직 완성되지 않는 경우 더많은 명령어를 입력하도록 R이 대기하는데 이런 경우 콘솔창에 <code>+</code> 프롬프트가 나타난다. 이런 경우 완성된 명령어 입력이 되지 않았다는 것을 의미한다. ‘닫는’ 괄호 혹은 인용부호를 입력하지 않았기 때문이다; 즉, 좌측 괄호 갯수와 우측 괄호 갯수가 동일하지 않거나 여는 인용부호 갯수와 닫는 인용부호 갯수가 달라서 이런 경우가 발생한다. RStudio를 사용하는데 이런 상황이 발생되면, 콘솔 창 내부를 클릭하고 <code>Esc</code> 키를 누른다; 이렇게 하면 완성되지 않은 명령어가 취소되고 <code>&gt;</code> 프롬프트로 다시 복귀한다.</p>
 </div>
 <div id="r-" class="section level1">
 <h1>R 기초</h1>
@@ -218,34 +218,34 @@ $(document).ready(function () {
 </div>
 <div id="-." class="section level3">
 <h3>대입 연산자.</h3>
-<p><code>&lt;-</code> is the assignment operator. It assigns values on the right to objects on the left. So, after executing <code>x &lt;- 3</code>, the value of <code>x</code> is <code>3</code>. The arrow can be read as 3 <strong>goes into</strong> <code>x</code>. For historical reasons, you can also use <code>=</code> for assignments, but not in every context. Because of the <a href="http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html">slight</a> <a href="https://web.archive.org/web/20130610005305/https://stat.ethz.ch/pipermail/r-help/2009-March/191462.html">differences</a> in syntax, it is good practice to use always <code>&lt;-</code> for assignments, except when specifying the values of arguments in functions, when only <code>=</code> should be used, see below.</p>
-<p>In RStudio, typing <kbd>Alt</kbd> + <kbd>-</kbd> (push <kbd>Alt</kbd> at the same time as the <kbd>-</kbd> key) will write <code>&lt;-</code> in a single keystroke.</p>
+<p><code>&lt;-</code> 기호는 대입연산자다. 대입연산자 역할은 오른쪽 값을 왼쪽 객체에 대입한다. 따라서, <code>x &lt;- 3</code> 명령어를 실행하게 되면, <code>x</code> 값은 <code>3</code>이 된다. 화살표는 3 이 <code>x</code>로 <strong>투입된다(goes into)</strong> 로 읽혀질 수 있다. 역사적인 연유로 인해 대입연산자로 <code>=</code> 표기법을 사용할 수 있지만, 모든 문맥에서 동작하지는 않는다. 구문에 <a href="http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html">미묘한(slight)</a> <a href="https://web.archive.org/web/20130610005305/https://stat.ethz.ch/pipermail/r-help/2009-March/191462.html">차이(differences)</a> 때문에, 대입연산자로 항상 <code>&lt;-</code>을 사용하는 것이 좋은 습관이다. 하지만, 함수에 인자값을 지정할 때는 항상 <code>=</code>이 사용되어야 한다.</p>
+<p>RStudio에서 <kbd>Alt</kbd> + <kbd>-</kbd> (<kbd>Alt</kbd>를 누른 상태에서 <kbd>-</kbd> 키를 누름) 단축키를 사용하면 한번 키스트로크로 <code>&lt;-</code> 대입연산자를 타이핑하게 됨.</p>
 </div>
-<div id="functions-and-their-arguments" class="section level3">
-<h3>Functions and their arguments</h3>
-<p>Functions are “canned scripts” that automate something complicated or convenient or both. Many functions are predefined, or can be made available by importing R <em>packages</em> (more on that later). A function usually gets one or more inputs called <em>arguments</em>. Functions often (but not always) return a <em>value</em>. A typical example would be the function <code>sqrt()</code>. The input (the argument) must be a number, and the return value (in fact, the output) is the square root of that number. Executing a function (‘running it’) is called <em>calling</em> the function. An example of a function call is:</p>
+<div id="-" class="section level3">
+<h3>함수와 인자</h3>
+<p>함수는 “용기에 담긴 스크립트(canned scripts)”로 복잡하거나 편리하거나 혹은 복잡하고 편리하게 자동화하는데 사용된다. 대다수 함수는 사전에 정의되어 있거나 R <em>팩키지</em>를 불러와서 바로 이용할 수 있게 된다. 함수는 일반적으로 <em>인자(arguments)</em>라고 불리는 하나 혹은 다수 입력값을 받는다. 함수는 흔히 (항상은 아님) <em>값(value)</em>을 반환한다. 전형적인 예로 <code>sqrt()</code> 함수가 있다. 입력(인자)은 숫자여야 되고 반환값(실제로 출력)은 해당 숫자에 대한 제곱근이다. 함수를 실행을 함수 <em>호출(call)</em>이라고 한다. 함수 호출의 예제는 다음과 같다:</p>
 <p><code>b &lt;- sqrt(a)</code></p>
-<p>Here, the value of <code>a</code> is given to the <code>sqrt()</code> function, the <code>sqrt()</code> function calculates the square root, and returns the value which is then assigned to variable <code>b</code>. This function is very simple, because it takes just one argument.</p>
-<p>The return ‘value’ of a function need not be numerical (like that of <code>sqrt()</code>), and it also does not need to be a single item: it can be a set of things, or even a data set. We’ll see that when we read data files in to R.</p>
-<p>Arguments can be anything, not only numbers or filenames, but also other objects. Exactly what each argument means differs per function, and must be looked up in the documentation (see below). Some functions take arguments which may either be specified by the user, or if left out, take on a <em>default</em> value: these are called <em>options</em>. Options are typically used to alter the way the function operates, such as whether it ignores ‘bad values’, or what symbol to use in a plot. However, if you want something specific, you can specify a value of your choice which will be used instead of the default.</p>
-<p>Let’s try a function that can take multiple arguments: <code>round()</code>.</p>
+<p>여기서 <code>a</code> 값이 <code>sqrt()</code>에 전달되고, <code>sqrt()</code> 함수는 제곱근을 계산하고 반환되는 값을 <code>b</code>에 대입시킨다. 함수는 매우 단순한데 이유는 단지 인자를 하나만 받기 때문이다.</p>
+<p>함수 반환 ’값(value)’이 (<code>sqrt()</code> 사례처럼) 숫자일 필요는 없고, 반듯이 단일 항목일 필요도 없다: 임의 집합 혹은 심지어 데이터셋도 가능하다. R에 데이터 파일을 불러 읽어들이게 되면 이런 사실을 확인하게 된다.</p>
+<p>인자는 숫자 혹은 파일명 뿐만 아니라 다른 객체도 될 수 있다. 정확하게 각각의 인자가 의미하는 바는 함수마다 차이가 나서, 문서를 살펴봐야 한다(아래 참조). 일부 함수는 인자를 사용자가 명세하던가, 공란으로 남겨두면 <em>기본디폴트</em> 값을 인자로 넘기게 된다: 선택옵션이라고도 부른다. 선택옵션은 함수가 동작하는 방식을 변경하는데 사용된다; 그래프 플롯에 사용할 기호를 지정하거나 ’잘못된 값’을 무시하도록 함수에서 사전에 필터링. 하지만, 선택옵션에 무언가 지정하면, 기본디폴트 설정값 대신에 사용자가 선택한 값이 지정되어 적용된다.</p>
+<p>입력 인자를 다수 받는 함수를 실험해 보자: <code>round()</code>.</p>
 <pre class="r"><code>round(3.14159)</code></pre>
 <pre><code>## [1] 3</code></pre>
-<p>Here, we’ve called <code>round()</code> with just one argument, <code>3.14159</code>, and it has returned the value <code>3</code>. That’s because the default is to round to the nearest whole number. If we want more digits we can see how to do that by getting information about the <code>round</code> function. We can use <code>args(round)</code> or look at the help for this function using <code>?round</code>.</p>
+<p>상기 예제에서 단지 입력인자를 하나(<code>3.14159</code>)로 <code>round()</code> 함수를 호출해서, 값 <code>3</code>이 반환되었다. 이유는 기본설정으로 가장 가까운 정수로 반올림하도록 지정되었기 때문이다. 소수점 자리수가 더 필요한 경우, <code>round</code> 함수에 대한 정보를 얻어 자리수를 조정하는 방법을 익히게 된다. <code>args(round)</code> 명령어를 사용하거나 <code>?round</code> 명령어를 사용한다.</p>
 <pre class="r"><code>args(round)</code></pre>
 <pre><code>## function (x, digits = 0) 
 ## NULL</code></pre>
 <pre class="r"><code>?round</code></pre>
-<p>We see that if we want a different number of digits, we can type <code>digits=2</code> or however many we want.</p>
+<p>소수점 아래 자리수를 변경하려면, <code>digits=2</code> 타이핑하고 나서 결과를 살펴본다.</p>
 <pre class="r"><code>round(3.14159, digits=2)</code></pre>
 <pre><code>## [1] 3.14</code></pre>
-<p>If you provide the arguments in the exact same order as they are defined you don’t have to name them:</p>
+<p>인자명을 지정하지 않고 정확하게 인자 순서를 맞춰 인자를 넘길 수도 있다:</p>
 <pre class="r"><code>round(3.14159, 2)</code></pre>
 <pre><code>## [1] 3.14</code></pre>
-<p>And if you do name the arguments, you can switch their order:</p>
+<p>인자명을 지정하게 되면, 인자 순서를 바꿀 수도 있다:</p>
 <pre class="r"><code>round(digits=2, x=3.14159)</code></pre>
 <pre><code>## [1] 3.14</code></pre>
-<p>It’s good practice to put the non-optional arguments (like the number you’re rounding) first in your function call, and to specify the names of all optional arguments. If you don’t, someone reading your code might have to look up definition of a function with unfamiliar arguments to understand what you’re doing.</p>
+<p>선택사항이 아닌 인자를 함수 호출 처음에 위치하고, 모든 선택옵션 인자에 대해 명칭을 붙이는 것은 좋은 코딩 습관이다. 이를 지키지 않게 되면, 여러분이 작성한 코드를 읽는 개발자는 코드를 이해하는데 친숙하지 않은 인자를 갖는 함수 정의를 찾아 읽어야 되는 부담이 수반된다.</p>
 </div>
 </div>
 </div>
@@ -253,31 +253,31 @@ $(document).ready(function () {
 <h1>도움말 찾기</h1>
 <div id="-------." class="section level3">
 <h3>사용할 함수명을 알고 있지만, 사용법을 모르는 경우 사용.</h3>
-<p>If you need help with a specific function, let’s say <code>barplot()</code>, you can type:</p>
+<p>특정 함수에 대한 도움말이 필요한 경우, <code>barplot()</code>이라고 가정하면, 다음과 같이 타이핑한다:</p>
 <pre class="r"><code>?barplot</code></pre>
-<p>If you just need to remind yourself of the names of the arguments, you can use:</p>
+<p>인자명을 다시 상기하고자 하면, 다음과 같이 타이핑한다:</p>
 <pre class="r"><code>args(lm)</code></pre>
 </div>
 <div id="-x----.-------" class="section level3">
 <h3>어떤 작업(<code>X</code>)를 수행할 함수를 사용하고자 한다. 함수가 확실히 있지만 어떤 것인지 모를 때…</h3>
-<p>If you are looking for a function to do a particular task, you can use <code>help.search()</code> function, which is called by the double question mark <code>??</code>. However, this only looks through the installed packages for help pages with a match to your search request</p>
+<p>특정 작업을 수행하는 함수를 찾고자 한다면, <code>help.search()</code> 함수를 사용하는데, <code>??</code> 물음표 두개로 호출할 수 있다. 하지만, 설치가 완료된 팩키지에 대해서만 도움말을 검색해서 매칭되는 결과를 반환한다.</p>
 <pre class="r"><code>??kruskal</code></pre>
-<p>If you can’t find what you are looking for, you can use the <a href="http://www.rdocumentation.org">rdocumention.org</a> website that searches through the help files across all packages available.</p>
+<p>찾고자 하는 것을 찾을 수 없는 경우, <a href="http://www.rdocumentation.org">rdocumention.org</a> 웹사이트를 활용해서 전체 팩키지에 대한 도움말 파일을 검색한다.</p>
 </div>
 <div id="------." class="section level3">
 <h3>줸장… 오류 메시지가 나왔는데… 이해가 되지 않음.</h3>
-<p>Start by googling the error message. However, this doesn’t always work very well because often, package developers rely on the error catching provided by R. You end up with general error messages that might not be very helpful to diagnose a problem (e.g. “subscript out of bounds”). If the message is very generic, you might also include the name of the function or package you’re using in your query.</p>
-<p>However, you should check StackOverflow. Search using the <code>[r]</code> tag. Most questions have already been answered, but the challenge is to use the right words in the search to find the answers: <a href="http://stackoverflow.com/questions/tagged/r" class="uri">http://stackoverflow.com/questions/tagged/r</a></p>
-<p>The <a href="http://cran.r-project.org/doc/manuals/R-intro.pdf">Introduction to R</a> can also be dense for people with little programming experience but it is a good place to understand the underpinnings of the R language.</p>
-<p>The <a href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> is dense and technical but it is full of useful information.</p>
+<p>오류 메시지를 구글링해서 찾아본다. 하지만, 구글링이 항상 동작하지는 않는데, 이유는 팩키지 개발자는 R이 발견한 오류만 잡기 대문이다. 여러분들은 문제를 진단하는데 별 도움이 되지 않는 일반적인 오류 메시지만 받게 된다. (즉, “subscript out of bounds”). 메시지가 매우 일반적이면, 찾으려고 하는 함수명 혹은 팩키지명을 포함시킨다.</p>
+<p>하지만, StackOverflow 사이트는 꼭 확인해야 한다. <code>[r]</code> 태그를 사용해서 검색한다. 질문 대부분에 대해 해답이 달려 있지만, 문제는 해답을 찾는데 도움이 되는 적절한 단어를 사용하고 있느냐다: <a href="http://stackoverflow.com/questions/tagged/r" class="uri">http://stackoverflow.com/questions/tagged/r</a></p>
+<p><a href="http://cran.r-project.org/doc/manuals/R-intro.pdf">Introduction to R</a> 문서는 프로그래밍 경험이 거의 없는 사람에게 내용이 충실하고 난해할 수 있지만, R 언어 토대를 이해하기 좋은 시작점이 된다.</p>
+<p><a href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a>는 충실하고 기술적이지만 유용한 정보로 가득차 있다.</p>
 </div>
 <div id="--" class="section level2">
 <h2>도움 요청하는 방법</h2>
-<p>The key to get help from someone is for them to grasp your problem rapidly. You should make it as easy as possible to pinpoint where the issue might be.</p>
-<p>Try to use the correct words to describe your problem. For instance, a package is not the same thing as a library. Most people will understand what you meant, but others have really strong feelings about the difference in meaning. The key point is that it can make things confusing for people trying to help you. Be as precise as possible when describing your problem.</p>
-<p>If possible, try to reduce what doesn’t work to a simple <em>reproducible example</em>. If you can reproduce the problem using a very small <code>data.frame</code> instead of your 50,000 rows and 10,000 columns one, provide the small one with the description of your problem. When appropriate, try to generalize what you are doing so even people who are not in your field can understand the question. For instance instead of using a subset of your real dataset, create a small (3 columns, 5 row) generic one. For more information on how to write a reproducible example see <a href="http://adv-r.had.co.nz/Reproducibility.html">this article by Hadley Wickham</a>.</p>
-<p>To share an object with someone else, if it’s relatively small, you can use the function <code>dput()</code>. It will output R code that can be used to recreate the exact same object as the one in memory:</p>
-<pre class="r"><code>dput(head(iris)) # iris is an example data.frame that comes with R</code></pre>
+<p>다른 누군가에게서 도움을 얻는 핵심은 본인 문제를 재빨리 이해시키는 것이다. 이슈가 발생할 곳을 정확히 특정할 수 있도록 가능하면 쉽게 만들어서 전달해야 된다.</p>
+<p>문제를 기술하는 올바른 단어를 사용한다. 예를 들어, 팩키지는 라이브러리와 같은 것이 아니다. 대부분의 사람은 여러분이 의도한 것을 이해하지만, 다른 사람들은 의미에 나타난 차이에 정말 강한 감정을 갖기도 한다. 중요한 점은 이런 사실이 여러분을 도우려고 하는 사람들에게 혼동을 준다는 사실이다. 본인이 갖고 있는 문제를 기술할 때 가능하면 정확하게 묘사하도록 노력한다.</p>
+<p>가능하면, 동작하지 않는 것을 간단한 <em>재현가능한</em> 예제로 만들도록 한다. 행이 50,000, 열이 10,000 나 되는 데이터 대신에 매우 작은 <code>data.frame</code>을 사용해서 문제를 재생산하고 나서, 문제에 대한 기술을 갖는 작은 예제를 준비하여 전달한다. 필요한 경우, 작업하는 바를 일반화해서 해당 전문분야에 있지 않는 사람도 문제를 이해할 수 있도록 한다. 예를 들어, 실제 데이터셋의 일부를 사용하는 대신에, 작지만 일반적인 데이터(칼럼 3, 행 5)를 생성한다. 재현가능한 예제를 작성하는 방법에 대한 자세한 사항은 <a href="http://adv-r.had.co.nz/Reproducibility.html">Hadley Wickham이 작성한 기사</a>를 참조한다.</p>
+<p>누군가와 객체를 공유하는 경우, 상대적으로 크기가 크지 않다면, <code>dput()</code> 함수를 사용한다. <code>dput()</code>함수는 본인 메모리에 상주하는 것과 정확하게 동일한 객체를 재생산해내는 R코드를 출력한다:</p>
+<pre class="r"><code>dput(head(iris)) # iris 데이터는 R에 따려오는 예제 데이터프레임이다.</code></pre>
 <pre><code>## structure(list(Sepal.Length = c(5.1, 4.9, 4.7, 4.6, 5, 5.4), 
 ##     Sepal.Width = c(3.5, 3, 3.2, 3.1, 3.6, 3.9), Petal.Length = c(1.4, 
 ##     1.4, 1.3, 1.5, 1.4, 1.7), Petal.Width = c(0.2, 0.2, 0.2, 
@@ -285,39 +285,36 @@ $(document).ready(function () {
 ##     1L), .Label = c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;), class = &quot;factor&quot;)), .Names = c(&quot;Sepal.Length&quot;, 
 ## &quot;Sepal.Width&quot;, &quot;Petal.Length&quot;, &quot;Petal.Width&quot;, &quot;Species&quot;), row.names = c(NA, 
 ## 6L), class = &quot;data.frame&quot;)</code></pre>
-<p>If the object is larger, provide either the raw file (i.e., your CSV file) with your script up to the point of the error (and after removing everything that is not relevant to your issue). Alternatively, in particular if your questions is not related to a <code>data.frame</code>, you can save any R object to a file:</p>
+<p>객체가 큰 경우, 원파일(즉, CSV파일)과 해결하려고 하는 문제와 관계없는 부분을 모두 제거하고 오류가 발생된 지점까지 정보가 담긴 스크립트를 제공한다. 또 다른 방법으로 질문이 <code>data.frame</code>에 연관되어 있지 않는 경우, 어떤 R객체도 파일에 저장할 수 있다:</p>
 <pre class="r"><code>saveRDS(iris, file=&quot;/tmp/iris.rds&quot;)</code></pre>
-<p>The content of this file is however not human readable and cannot be posted directly on stackoverflow. It can however be sent to someone by email who can read it with this command:</p>
+<p>하지만, 파일 내용은 사람이 읽을 수 없고 statckoverflow 사이트에 직접 게시할 수도 없다. 하지만 전자우편을 통해 다른 사람에게 전달하게 되면 다음 명령어로 읽어 들일 수 있다:</p>
 <pre class="r"><code>some_data &lt;- readRDS(file=&quot;~/Downloads/iris.rds&quot;)</code></pre>
-<p>Last, but certainly not least, <strong>always include the output of <code>sessionInfo()</code></strong> as it provides critical information about your platform, the versions of R and the packages that you are using, and other information that can be very helpful to understand your problem.</p>
+<p>마지막으로 <strong><code>sessionInfo()</code> 함수 출력결과를 항상 포함</strong>시켜서, 본인 플랫폼에 대한 중요한 정보도 함께 넘긴다. <code>sessionInfo()</code> 함수 출력결과에는 R 버젼, 활용된 팩키지 정보, 더불어 문제를 이해하는데 크게 도움이 될 수 있는 부가 정보가 포함된다.</p>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.3.1 (2016-06-21)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 14393)
+<pre><code>## R version 3.2.4 (2016-03-10)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.11.6 (El Capitan)
 ## 
 ## locale:
-## [1] LC_COLLATE=Korean_Korea.949  LC_CTYPE=Korean_Korea.949   
-## [3] LC_MONETARY=Korean_Korea.949 LC_NUMERIC=C                
-## [5] LC_TIME=Korean_Korea.949    
+## [1] ko_KR.UTF-8/ko_KR.UTF-8/ko_KR.UTF-8/C/ko_KR.UTF-8/ko_KR.UTF-8
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] magrittr_1.5       assertthat_0.1     formatR_1.4       
-##  [4] tools_3.3.1        htmltools_0.3.5    yaml_2.1.13       
-##  [7] tibble_1.2         Rcpp_0.12.7        stringi_1.1.1     
-## [10] rmarkdown_1.0.9016 knitr_1.14         stringr_1.1.0     
-## [13] digest_0.6.10      evaluate_0.9</code></pre>
+##  [1] magrittr_1.5       formatR_1.4        tools_3.2.4       
+##  [4] htmltools_0.3.5    yaml_2.1.13        Rcpp_0.12.7       
+##  [7] stringi_1.1.1      rmarkdown_1.0.9001 knitr_1.13        
+## [10] stringr_1.0.0      digest_0.6.10      evaluate_0.9</code></pre>
 </div>
-<div id="where-to-ask-for-help" class="section level2">
-<h2>Where to ask for help?</h2>
+<div id="--" class="section level2">
+<h2>도움을 구할 곳?</h2>
 <ul>
-<li>Your friendly colleagues: if you know someone with more experience than you, they might be able and willing to help you.</li>
-<li><a href="http://stackoverflow.com/questions/tagged/r">StackOverflow</a>: if your question hasn’t been answered before and is well crafted, chances are you will get an answer in less than 5 min. Remember to follow their guidelines on <a href="http://stackoverflow.com/help/how-to-ask">how to ask a good question</a>.</li>
-<li>The <a href="https://stat.ethz.ch/mailman/listinfo/r-help">R-help mailing list</a>: it is read by a lot of people (including most of the R core team), a lot of people post to it, but the tone can be pretty dry, and it is not always very welcoming to new users. If your question is valid, you are likely to get an answer very fast but don’t expect that it will come with smiley faces. Also, here more than everywhere else, be sure to use correct vocabulary (otherwise you might get an answer pointing to the misuse of your words rather than answering your question). You will also have more success if your question is about a base function rather than a specific package.</li>
-<li>If your question is about a specific package, see if there is a mailing list for it. Usually it’s included in the DESCRIPTION file of the package that can be accessed using <code>packageDescription(&quot;name-of-package&quot;)</code>. You may also want to try to email the author of the package directly, or open an issue on the code repository (e.g., GitHub).</li>
-<li>There are also some topic-specific mailing lists (GIS, phylogenetics, etc…), the complete list is <a href="http://www.r-project.org/mail.html">here</a>.</li>
+<li>친한 동료: 여러분보다 더 경험이 많은 누군가를 알고 있다면, 그 누군가가 여러분을 구원해 줄 것입니다.</li>
+<li><a href="http://stackoverflow.com/questions/tagged/r">StackOverflow</a>: 전에 질문된 적이 없고 질문이 잘 다듬어진 경우, 5분 미만으로 해답을 얻을 수 있다. <a href="http://stackoverflow.com/help/how-to-ask">how to ask a good question</a> 지침을 따라 질문을 올리는 것을 기억한다.</li>
+<li><a href="https://stat.ethz.ch/mailman/listinfo/r-help">R-help mailing list</a>: R 코어 개발팀을 포함한 많은 사람들이 구독하고 많은 분들이 글을 올리신다. 하지만 상당히 읽기 건조해서, 신규 새내기 사용자를 항상 환영하는 것은 아니다. 질문이 타당한 경우, 해결책을 매우 빠르게 얻을 수 있지만 응답에 해맑은 미소를 기대하지는 마라. 다른 곳에서도 동일하지만 올바른 용어를 사용하도록 확인한다(그렇지 않는 경우, 질문에 대한 대답을 얻기보다 잘못된 용어에 대한 대답을 받게 된다). 묻는 질문이 특정 팩키지보다 <code>base</code> 함수에 대한 질문이라면 더 성공가능성이 높다.</li>
+<li>질문이 특정한 팩키지라면, 해당 팩키지에 메일링 리스트가 존재하는지 확인한다. 일반적으로 <code>packageDescription(&quot;name-of-package&quot;)</code> 명령어를 사용하면 메일링 리스트가 팩키지 DESCRIPTION 파일에 담겨있다. 팩키지 개발자에게 직접 전자우편으로 보내거나, 코드 저장소(즉, GitHub)에 이슈를 열어 도움을 구한다.</li>
+<li>특수한 주제를 갖는 메일링 리스트도 있다(GIS, phylogenetics 등…), 전체 메일링 리스트는 <a href="http://www.r-project.org/mail.html">요기</a>를 참조한다.</li>
 </ul>
 </div>
 <div id="-" class="section level2">
