@@ -79,72 +79,74 @@ RStudio 프로젝트를 생성하게 되면 사용자를 대신해서 작업 디
 
 # RStudio 소개
 
+[RStudio](https://www.rstudio.com/)(통합개발환경 Integrated Development Environment, IDE)에 대한 학습을 시작해보자.
 
-Let's start by learning about [RStudio](https://www.rstudio.com/), the Integrated Development Environment (IDE).
+RStudio IDE는 [Affero General Public License (AGPL) v3](https://www.gnu.org/licenses/agpl-3.0.en.html) 
+라이선스 아래 오픈소스 형태로 자유로이 사용이 가능하다.
 
-The RStudio IDE open source product is free under the [Affero General Public License (AGPL) v3](https://www.gnu.org/licenses/agpl-3.0.en.html). RStudio IDE is also available with a commercial license and priority email support from RStudio, Inc.
+RStudio IDE를 사용해서 코드를 작성하고, 컴퓨터에 저장된 파일을 탐색하고,
+생성할 변수를 조사하고, 그래프 플롯을 시각화한다.
+RStudio를 다른 목적으로도 자주 사용된다(즉, 버젼 제어, 팩키지 개발, Shiny 웹앱 개발 등), 하지만 
+금번 워크샵에서는 이런 내용을 다루지 않는다. 
 
-We will use RStudio IDE to write code, navigate the files found on our computer, inspect the variables we are going to create, and visualize the plots we will generate. RStudio can also be used for other things (e.g., version control, developing packages, writting Shiny apps) that we will not cover during the workshop.
+RStudio는 4개 창("Pane")으로 나눠진다:
+스크립트와 문서를 작성하는데 사용되는 편집기(기본 설정화면에서, 좌측 상단),
+R 콘솔(좌측 하단), 환경/이력(우측 상단), 파일/플롯/팩키지/도움말/뷰어(우측 하단).
+창 4개 위치와 내부 콘텐츠는 사용자 환경에 맞춰 조정을 할 수 있다
+(메뉴에서, RStudio &rarr; Preferences &rarr; Pane Layout).
+RStudio를 사용하는 장점중 하나는 코드를 작성하는데 필요한 모든 정보가 창 하나에서 찾아볼 수 있다는 
+점이다. 추가적으로, 다양한 단축키 지원, 자동완성기능, R로 작업할 때 주요 파일형식에 따라
+주요 키워드에 대한 강조 하이라이트 기능을 제공함으로써, 
+RStudio를 활용함으로써 타이핑을 수월하게 하고 오류를 줄일 수 있게 된다.
 
-RStudio is divided into 4 "Panes": the editor for your scripts and documents
-(top-left, in the default layout), the R console (bottom-left), your
-environment/history (top-right), and your files/plots/packages/help/viewer
-(bottom-right). The placement of these panes and their content can be customized
-(see menu, RStudio -> Preferences -> Pane Layout). One of the advantages of
-using RStudio is that all the information you need to write code is available in
-a single window. Additionally, with many shortcuts, autocompletion, and
-highlighting for the major file types you use while developing in R, RStudio
-will make typing easier and less error-prone.
+# R과 상호작용 
 
+프로그래밍 기본은 컴퓨터가 수행할 명령어를 작성하고 나서, 
+컴퓨터가 작성된 명령을 수행하도록 지시를 하는 것이다.
+R로 코드를 작성 혹은 *코딩*하는데 이유는 컴퓨터와 사람이 모두 이해할 수 있는 
+공통된 언어이기 때문이다. 
+지시사항(instruction)을 *명령어(command)*라고 부르며, 
+명령어를 *실행(executing)*해서 
+지시사항을 컴퓨터가 따르도록 명령을 내린다.
 
-# Interacting with R
+R과 인터랙티브하게 상호작업하는 방식은 두가지가 존재한다: 콘솔을 사용하거나,
+스크립트 파일(코드를 포함한 일반적인 텍스트 파일)을 활용하는 것이다.
+코드와 작업흐름이 재현가능해야만 한다.
+다르게 표현하면, 누구나 쉽게 복제할 수 있는 방식으로 코드를 작성해서
+누군가의 컴퓨터에서도 코드를 돌리면 동일한 결과를 얻을 수 있어야 한다.
 
-The basis of programming is that we write down instructions for the computer to
-follow, and then we tell the computer to follow those instructions. We write, or
-*code*, instructions in R because it is a common language that both the computer
-and we can understand. We call the instructions *commands* and we tell the
-computer to follow the instructions by *executing* (also called *running*) those
-commands.
+콘솔창(RStudio를 실행하면 좌측 하단창)은 사용자가 명령을 내리면 바로 실행할 수 있도록
+대기하고 있고, 명령어가 실행되면 실행결과가 보여지는 장소이기도 하다.
+콘솔창에 명령어를 바로 타이핑하고 `엔터(Enter)`키를 쳐서 명령어를 실행한다.
+하지만 세션을 끊게 되면 콘솔창에 입력한 명령어와 실행결과는 사라진다.
+스크립트 편집기에서 명령어를 작성하고 나서 스크립트로 저장하는 것이 더 낫다.
+이렇게 하면, 작업한 것에 대한 온전한 기록을 보존할 수 있어서,
+다른 사람들에게 작업한 방식을 보여줄 수도 있고, 필요하면 나중에 작성한 본인이
+다시 작업하는데 활용할 수 있다.
+RStudio에서 <kbd>`Ctrl`</kbd> + <kbd>`Enter`</kbd> 단축키를 사용하면, 스크립트 편집기에서
+직접 명령어를 실행할 수 있다. 스크립트에서 커서가 위치한 현재 라인, 
+혹은 현재 선택한 모든 명령어를 콘솔창에 바로 보내 실행하는데 <kbd>`Ctrl`</kbd> +
+<kbd>`Enter`</kbd> 단축키를 사용한다.
 
-There are two main ways of interacting with R: using the console or by using
-script files (plain text files that contain your code). We want our code and
-workflow to be reproducible. In other words, we want to write code in a way that
-anyone can easily replicate, such they can obtain the same results from our code
-on their computer.
+분석을 진행하다면 특정 시점에, 변수에 들어있는 내용 혹은 객체 구조를 살펴볼 필요가 있는데,
+이런 경우 반듯이 스크립트에 코드로 기록할 필요는 없다.
+콘솔창에서 직접 명령어를 타이핑하고 명령어를 실행하는 것이 가능하다.
+RStudio에서 <kbd>`Ctrl`</kbd> + <kbd>`1`</kbd> 과 <kbd>`Ctrl`</kbd> +
+<kbd>`2`</kbd> 단축키를 눌러 스크립트 창과 콘솔창을 바로 이동할 수 있다.
 
-The console pane (in RStudio, the bottom left panel) is the place where R is
-waiting for you to tell it what to do, and where it will show the results of a
-command that has been executed.  You can type commands directly into the console
-and press `Enter` to execute those commands, but they will be forgotten when you
-close the session. It is better to enter the commands in the script editor, and
-save the script. This way, you have a complete record of what you did, you can
-easily show others how you did it and you can do it again later on if needed.
-RStudio allows you to execute commands directly from the script editor by using
-the <kbd>`Ctrl`</kbd> + <kbd>`Enter`</kbd> shortcut. The command on the current
-line in the script or all of the commands in the currently selected text will be
-sent to the console and executed when you press <kbd>`Ctrl`</kbd> +
-<kbd>`Enter`</kbd>.
+R이 명령어를 받아들일 준비가 된다면, 
+R 콘솔창에 `>` 프롬프트가 보여지게 된다. 
+명령어를 R에서 받게 되면(타이핑하거나, 복사해서 붙여넣거나 <kbd>`Ctrl`</kbd> + <kbd>`Enter`</kbd> 단축키를 눌러
+편집기 창에서 전송), R이 실행하게 되고, 준비되면 결과를 보여주고 `>` 프롬프트가 
+다시 나타나서 새로운 명령어를 받을 준비가 되었음을 보여준다.
 
-At some point in your analysis you may want to check the content of variable or
-the structure of an object, without necessarily keep a record of it in your
-script. You can type these commands and execute them directly in the console.
-RStudio provides the <kbd>`Ctrl`</kbd> + <kbd>`1`</kbd> and <kbd>`Ctrl`</kbd> +
-<kbd>`2`</kbd> shortcuts allow you to jump between the script and the console
-windows.
-
-If R is ready to accept commands, the R console shows a `>` prompt. If it
-receives a command (by typing, copy-pasting or sent from the script editor using
-<kbd>`Ctrl`</kbd> + <kbd>`Enter`</kbd>), R will try to execute it, and when
-ready, show the results and come back with a new `>`-prompt to wait for new
-commands.
-
-If R is still waiting for you to enter more data because it isn't complete yet,
-the console will show a `+` prompt. It means that you haven't finished entering
-a complete command. This is because you have not 'closed' a parenthesis or
-quotation, i.e. you don't have the same number of left-parentheses as
-right-parentheses, or the same number of opening and closing quotation marks. If
-you're in RStudio and this happens, click inside the console window and press
-`Esc`; this will cancel the incomplete command and return you to the `>` prompt.
+명령어가 아직 완성되지 않는 경우 더많은 명령어를 입력하도록 R이 대기하는데 이런 경우 
+콘솔창에 `+` 프롬프트가 나타난다.
+이런 경우 완성된 명령어 입력이 되지 않았다는 것을 의미한다. 
+'닫는' 괄호 혹은 인용부호를 입력하지 않았기 때문이다; 즉, 좌측 괄호 갯수와 우측 괄호 갯수가 동일하지 않거나
+여는 인용부호 갯수와 닫는 인용부호 갯수가 달라서 이런 경우가 발생한다.
+RStudio를 사용하는데 이런 상황이 발생되면, 콘솔 창 내부를 클릭하고 `Esc` 키를 누른다;
+이렇게 하면 완성되지 않은 명령어가 취소되고 `>` 프롬프트로 다시 복귀한다.
 
 # R 기초
 
@@ -183,57 +185,52 @@ _스크립트 예제를 데모로 보여주며 시작_
 
 ### 대입 연산자.
 
-`<-` is the assignment operator. It assigns values on the right to objects on
-the left. So, after executing `x <- 3`, the value of `x` is `3`. The arrow can
-be read as 3 **goes into** `x`.  For historical reasons, you can also use `=` for assignments,
-but not in every context. Because of the [slight](http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html) [differences](https://web.archive.org/web/20130610005305/https://stat.ethz.ch/pipermail/r-help/2009-March/191462.html) in syntax,
-it is good practice to use always `<-` for assignments, except when specifying the values of
-arguments in functions, when only `=` should be used, see below.
+`<-` 기호는 대입연산자다. 대입연산자 역할은 오른쪽 값을 왼쪽 객체에 대입한다.
+따라서, `x <- 3` 명령어를 실행하게 되면, `x` 값은 `3`이 된다.
+화살표는 3 이 `x`로 **투입된다(goes into)** 로 읽혀질 수 있다.
+역사적인 연유로 인해 대입연산자로 `=` 표기법을 사용할 수 있지만, 모든 문맥에서 동작하지는 않는다.
+구문에 [미묘한(slight)](http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html) 
+[차이(differences)](https://web.archive.org/web/20130610005305/https://stat.ethz.ch/pipermail/r-help/2009-March/191462.html) 때문에,
+대입연산자로 항상 `<-`을 사용하는 것이 좋은 습관이다. 하지만, 함수에 인자값을 지정할 때는 항상 `=`이 사용되어야 한다. 
 
-In RStudio, typing <kbd>Alt</kbd> + <kbd>-</kbd> (push <kbd>Alt</kbd> at the
-same time as the <kbd>-</kbd> key) will write ` <- ` in a single keystroke.
+RStudio에서 <kbd>Alt</kbd> + <kbd>-</kbd> (<kbd>Alt</kbd>를 누른 상태에서 
+<kbd>-</kbd> 키를 누름) 단축키를 사용하면 한번 키스트로크로 ` <- ` 대입연산자를 타이핑하게 됨.
 
-### Functions and their arguments
+### 함수와 인자
 
-Functions are "canned scripts" that automate something complicated or convenient
-or both.  Many functions are predefined, or can be made available by importing R
-*packages* (more on that later). A function usually gets one or more inputs
-called *arguments*. Functions often (but not always) return a *value*. A typical
-example would be the function `sqrt()`. The input (the argument) must be a
-number, and the return value (in fact, the output) is the square root of that
-number. Executing a function ('running it') is called *calling* the function. An
-example of a function call is:
+함수는 "용기에 담긴 스크립트(canned scripts)"로 복잡하거나 편리하거나 혹은 복잡하고 편리하게 자동화하는데 사용된다.
+대다수 함수는 사전에 정의되어 있거나 R *팩키지*를 불러와서 바로 이용할 수 있게 된다.
+함수는 일반적으로 *인자(arguments)*라고 불리는 하나 혹은 다수 입력값을 받는다.
+함수는 흔히 (항상은 아님) *값(value)*을 반환한다.
+전형적인 예로 `sqrt()` 함수가 있다. 입력(인자)은 숫자여야 되고 반환값(실제로 출력)은 해당 숫자에 대한 제곱근이다.
+함수를 실행을 함수 *호출(call)*이라고 한다. 함수 호출의 예제는 다음과 같다:
 
 `b <- sqrt(a)`
 
-Here, the value of `a` is given to the `sqrt()` function, the `sqrt()` function
-calculates the square root, and returns the value which is then assigned to
-variable `b`. This function is very simple, because it takes just one argument.
+여기서 `a` 값이 `sqrt()`에 전달되고, `sqrt()` 함수는 제곱근을 계산하고 반환되는 값을 
+`b`에 대입시킨다. 함수는 매우 단순한데 이유는 단지 인자를 하나만 받기 때문이다.
 
-The return 'value' of a function need not be numerical (like that of `sqrt()`),
-and it also does not need to be a single item: it can be a set of things, or
-even a data set. We'll see that when we read data files in to R.
+함수 반환 '값(value)'이 (`sqrt()` 사례처럼) 숫자일 필요는 없고, 반듯이 단일 항목일 필요도 없다:
+임의 집합 혹은 심지어 데이터셋도 가능하다. R에 데이터 파일을 불러 읽어들이게 되면 이런 사실을 확인하게 된다.
 
-Arguments can be anything, not only numbers or filenames, but also other
-objects. Exactly what each argument means differs per function, and must be
-looked up in the documentation (see below). Some functions take arguments which
-may either be specified by the user, or if left out, take on a *default* value:
-these are called *options*. Options are typically used to alter the way the
-function operates, such as whether it ignores 'bad values', or what symbol to
-use in a plot.  However, if you want something specific, you can specify a value
-of your choice which will be used instead of the default.
 
-Let's try a function that can take multiple arguments: `round()`.
+인자는 숫자 혹은 파일명 뿐만 아니라 다른 객체도 될 수 있다.
+정확하게 각각의 인자가 의미하는 바는 함수마다 차이가 나서, 문서를 살펴봐야 한다(아래 참조).
+일부 함수는 인자를 사용자가 명세하던가, 공란으로 남겨두면 *기본디폴트* 값을 인자로 넘기게 된다: 선택옵션이라고도 부른다.
+선택옵션은 함수가 동작하는 방식을 변경하는데 사용된다; 그래프 플롯에 사용할 기호를 지정하거나 '잘못된 값'을 무시하도록 함수에서 사전에 필터링.
+하지만, 선택옵션에 무언가 지정하면, 기본디폴트 설정값 대신에 사용자가 선택한 값이 지정되어 적용된다.
+
+입력 인자를 다수 받는 함수를 실험해 보자: `round()`.
 
 ```{r, results='show', purl=FALSE}
 round(3.14159)
 ```
 
-Here, we've called `round()` with just one argument, `3.14159`, and it has
-returned the value `3`.  That's because the default is to round to the nearest
-whole number. If we want more digits we can see how to do that by getting
-information about the `round` function.  We can use `args(round)` or look at the
-help for this function using `?round`.
+상기 예제에서 단지 입력인자를 하나(`3.14159`)로 `round()` 함수를 호출해서, 값 `3`이 
+반환되었다.
+이유는 기본설정으로 가장 가까운 정수로 반올림하도록 지정되었기 때문이다.
+소수점 자리수가 더 필요한 경우, `round` 함수에 대한 정보를 얻어 자리수를 조정하는 방법을 익히게 된다.
+`args(round)` 명령어를 사용하거나 `?round` 명령어를 사용한다.
 
 ```{r, results='show', purl=FALSE}
 args(round)
@@ -243,44 +240,40 @@ args(round)
 ?round
 ```
 
-We see that if we want a different number of digits, we can
-type `digits=2` or however many we want.
+소수점 아래 자리수를 변경하려면, `digits=2` 타이핑하고 나서 결과를 살펴본다.
 
 ```{r, results='show', purl=FALSE}
 round(3.14159, digits=2)
 ```
 
-If you provide the arguments in the exact same order as they are defined you
-don't have to name them:
+인자명을 지정하지 않고 정확하게 인자 순서를 맞춰 인자를 넘길 수도 있다:
 
 ```{r, results='show', purl=FALSE}
 round(3.14159, 2)
 ```
 
-And if you do name the arguments, you can switch their order:
+인자명을 지정하게 되면, 인자 순서를 바꿀 수도 있다:
 
 ```{r, results='show', purl=FALSE}
 round(digits=2, x=3.14159)
 ```
 
-It's good practice to put the non-optional arguments (like the number you're
-rounding) first in your function call, and to specify the names of all optional
-arguments.  If you don't, someone reading your code might have to look up
-definition of a function with unfamiliar arguments to understand what you're
-doing.
+선택사항이 아닌 인자를 함수 호출 처음에 위치하고, 모든 선택옵션 인자에 대해 명칭을 붙이는 것은 좋은 코딩 습관이다.
+이를 지키지 않게 되면, 여러분이 작성한 코드를 읽는 개발자는 코드를 이해하는데 친숙하지 않은 인자를 갖는 함수 정의를 
+찾아 읽어야 되는 부담이 수반된다.
 
 
 # 도움말 찾기
 
 ### 사용할 함수명을 알고 있지만, 사용법을 모르는 경우 사용.
 
-If you need help with a specific function, let's say `barplot()`, you can type:
+특정 함수에 대한 도움말이 필요한 경우, `barplot()`이라고 가정하면, 다음과 같이 타이핑한다:
 
 ```{r, eval=FALSE, purl=FALSE}
 ?barplot
 ```
 
-If you just need to remind yourself of the names of the arguments, you can use:
+인자명을 다시 상기하고자 하면, 다음과 같이 타이핑한다:
 
 ```{r, eval=FALSE, purl=FALSE}
 args(lm)
@@ -288,117 +281,104 @@ args(lm)
 
 ### 어떤 작업(`X`)를 수행할 함수를 사용하고자 한다. 함수가 확실히 있지만 어떤 것인지 모를 때...
 
-If you are looking for a function to do a particular task, you can use
-`help.search()` function, which is called by the double question mark `??`.
-However, this only looks through the installed packages for help pages with a
-match to your search request
+특정 작업을 수행하는 함수를 찾고자 한다면, `help.search()` 함수를 사용하는데, `??` 물음표 두개로 
+호출할 수 있다. 하지만, 설치가 완료된 팩키지에 대해서만 도움말을 검색해서 매칭되는 결과를 반환한다.
 
 ```{r, eval=FALSE, purl=FALSE}
 ??kruskal
 ```
 
-If you can't find what you are looking for, you can use the
-[rdocumention.org](http://www.rdocumentation.org) website that searches through
-the help files across all packages available.
+찾고자 하는 것을 찾을 수 없는 경우, 
+[rdocumention.org](http://www.rdocumentation.org) 웹사이트를 활용해서 
+전체 팩키지에 대한 도움말 파일을 검색한다.
 
 ### 줸장... 오류 메시지가 나왔는데... 이해가 되지 않음.
 
-Start by googling the error message. However, this doesn't always work very well
-because often, package developers rely on the error catching provided by R. You
-end up with general error messages that might not be very helpful to diagnose a
-problem (e.g. "subscript out of bounds"). If the message is very generic, you might
-also include the name of the function or package you're using in your query.
+오류 메시지를 구글링해서 찾아본다. 하지만, 구글링이 항상 동작하지는 않는데, 이유는 
+팩키지 개발자는 R이 발견한 오류만 잡기 대문이다.
+여러분들은 문제를 진단하는데 별 도움이 되지 않는 일반적인 오류 메시지만 받게 된다.
+(즉, "subscript out of bounds"). 메시지가 매우 일반적이면,
+찾으려고 하는 함수명 혹은 팩키지명을 포함시킨다.
 
-However, you should check StackOverflow. Search using the `[r]` tag. Most
-questions have already been answered, but the challenge is to use the right
-words in the search to find the answers:
+하지만, StackOverflow 사이트는 꼭 확인해야 한다.
+`[r]` 태그를 사용해서 검색한다. 질문 대부분에 대해 해답이 달려 있지만, 
+문제는 해답을 찾는데 도움이 되는 적절한 단어를 사용하고 있느냐다:
 [http://stackoverflow.com/questions/tagged/r](http://stackoverflow.com/questions/tagged/r)
 
-The [Introduction to R](http://cran.r-project.org/doc/manuals/R-intro.pdf) can
-also be dense for people with little programming experience but it is a good
-place to understand the underpinnings of the R language.
 
-The [R FAQ](http://cran.r-project.org/doc/FAQ/R-FAQ.html) is dense and technical
-but it is full of useful information.
+[Introduction to R](http://cran.r-project.org/doc/manuals/R-intro.pdf) 문서는 
+프로그래밍 경험이 거의 없는 사람에게 내용이 충실하고 난해할 수 있지만, R 언어 토대를 이해하기 
+좋은 시작점이 된다.
+
+[R FAQ](http://cran.r-project.org/doc/FAQ/R-FAQ.html)는 충실하고 기술적이지만 유용한 정보로 가득차 있다.
 
 ## 도움 요청하는 방법
 
-The key to get help from someone is for them to grasp your problem rapidly. You
-should make it as easy as possible to pinpoint where the issue might be.
+다른 누군가에게서 도움을 얻는 핵심은 본인 문제를 재빨리 이해시키는 것이다.
+이슈가 발생할 곳을 정확히 특정할 수 있도록 가능하면 쉽게 만들어서 전달해야 된다.
 
-Try to use the correct words to describe your problem. For instance, a package
-is not the same thing as a library. Most people will understand what you meant,
-but others have really strong feelings about the difference in meaning. The key
-point is that it can make things confusing for people trying to help you. Be as
-precise as possible when describing your problem.
+문제를 기술하는 올바른 단어를 사용한다. 
+예를 들어, 팩키지는 라이브러리와 같은 것이 아니다. 
+대부분의 사람은 여러분이 의도한 것을 이해하지만, 
+다른 사람들은 의미에 나타난 차이에 정말 강한 감정을 갖기도 한다.
+중요한 점은 이런 사실이 여러분을 도우려고 하는 사람들에게 혼동을 준다는 사실이다.
+본인이 갖고 있는 문제를 기술할 때 가능하면 정확하게 묘사하도록 노력한다.
 
-If possible, try to reduce what doesn't work to a simple *reproducible
-example*. If you can reproduce the problem using a very small `data.frame`
-instead of your 50,000 rows and 10,000 columns one, provide the small one with
-the description of your problem. When appropriate, try to generalize what you
-are doing so even people who are not in your field can understand the
-question. For instance instead of using a subset of your real dataset, create a
-small (3 columns, 5 row) generic one. For more information on how to write a
-reproducible example see [this article by Hadley Wickham](http://adv-r.had.co.nz/Reproducibility.html).
+가능하면, 동작하지 않는 것을 간단한 *재현가능한* 예제로 만들도록 한다.
+행이 50,000, 열이 10,000 나 되는 데이터 대신에 매우 작은 `data.frame`을 사용해서 문제를 재생산하고 나서,
+문제에 대한 기술을 갖는 작은 예제를 준비하여 전달한다.
+필요한 경우, 작업하는 바를 일반화해서 해당 전문분야에 있지 않는 사람도 문제를 이해할 수 있도록 한다.
+예를 들어, 실제 데이터셋의 일부를 사용하는 대신에, 작지만 일반적인 데이터(칼럼 3, 행 5)를 생성한다.
+재현가능한 예제를 작성하는 방법에 대한 자세한 사항은 
+[Hadley Wickham이 작성한 기사](http://adv-r.had.co.nz/Reproducibility.html)를 참조한다.
 
-To share an object with someone else, if it's relatively small, you can use the
-function `dput()`. It will output R code that can be used to recreate the exact
-same object as the one in memory:
+누군가와 객체를 공유하는 경우, 상대적으로 크기가 크지 않다면, `dput()` 함수를 사용한다.
+`dput()`함수는 본인 메모리에 상주하는 것과 정확하게 동일한 객체를 재생산해내는 R코드를 출력한다:
 
 ```{r, results='show', purl=FALSE}
-dput(head(iris)) # iris is an example data.frame that comes with R
+dput(head(iris)) # iris 데이터는 R에 따려오는 예제 데이터프레임이다.
 ```
 
-If the object is larger, provide either the raw file (i.e., your CSV file) with
-your script up to the point of the error (and after removing everything that is
-not relevant to your issue). Alternatively, in particular if your questions is
-not related to a `data.frame`, you can save any R object to a file:
+객체가 큰 경우, 원파일(즉, CSV파일)과 해결하려고 하는 문제와 관계없는 부분을 모두 제거하고 
+오류가 발생된 지점까지 정보가 담긴 스크립트를 제공한다.
+또 다른 방법으로 질문이 `data.frame`에 연관되어 있지 않는 경우, 어떤 R객체도 파일에 저장할 수 있다:
 
 ```{r, eval=FALSE, purl=FALSE}
 saveRDS(iris, file="/tmp/iris.rds")
 ```
 
-The content of this file is however not human readable and cannot be posted
-directly on stackoverflow. It can however be sent to someone by email who can
-read it with this command:
+하지만, 파일 내용은 사람이 읽을 수 없고 statckoverflow 사이트에 직접 게시할 수도 없다.
+하지만 전자우편을 통해 다른 사람에게 전달하게 되면 다음 명령어로 읽어 들일 수 있다:
 
 ```{r, eval=FALSE, purl=FALSE}
 some_data <- readRDS(file="~/Downloads/iris.rds")
 ```
 
-Last, but certainly not least, **always include the output of `sessionInfo()`**
-as it provides critical information about your platform, the versions of R and
-the packages that you are using, and other information that can be very helpful
-to understand your problem.
+마지막으로 **`sessionInfo()` 함수 출력결과를 항상 포함**시켜서, 본인 플랫폼에 대한 
+중요한 정보도 함께 넘긴다.  `sessionInfo()` 함수 출력결과에는 
+R 버젼, 활용된 팩키지 정보, 더불어 문제를 이해하는데 크게 도움이 될 수 있는 부가 정보가 포함된다.
 
 ```{r, results='show', purl=FALSE}
 sessionInfo()
 ```
 
-## Where to ask for help?
+## 도움을 구할 곳?
 
-* Your friendly colleagues: if you know someone with more experience than you,
-  they might be able and willing to help you.
-* [StackOverflow](http://stackoverflow.com/questions/tagged/r): if your question
-  hasn't been answered before and is well crafted, chances are you will get an
-  answer in less than 5 min. Remember to follow their guidelines on [how to ask
-  a good question](http://stackoverflow.com/help/how-to-ask).
-* The [R-help mailing list](https://stat.ethz.ch/mailman/listinfo/r-help): it is
-  read by a lot of people (including most of the R core team), a lot of people
-  post to it, but the tone can be pretty dry, and it is not always very
-  welcoming to new users. If your question is valid, you are likely to get an
-  answer very fast but don't expect that it will come with smiley faces. Also,
-  here more than everywhere else, be sure to use correct vocabulary (otherwise
-  you might get an answer pointing to the misuse of your words rather than
-  answering your question). You will also have more success if your question is
-  about a base function rather than a specific package.
-* If your question is about a specific package, see if there is a mailing list
-  for it. Usually it's included in the DESCRIPTION file of the package that can
-  be accessed using `packageDescription("name-of-package")`. You may also want
-  to try to email the author of the package directly, or open an issue on the
-  code repository (e.g., GitHub).
-* There are also some topic-specific mailing lists (GIS, phylogenetics, etc...),
-  the complete list is [here](http://www.r-project.org/mail.html).
+* 친한 동료: 여러분보다 더 경험이 많은 누군가를 알고 있다면, 그 누군가가 여러분을 구원해 줄 것입니다.
+* [StackOverflow](http://stackoverflow.com/questions/tagged/r): 전에 질문된 적이 없고 질문이 잘 다듬어진 경우,
+  5분 미만으로 해답을 얻을 수 있다. [how to ask a good question](http://stackoverflow.com/help/how-to-ask) 지침을 따라
+  질문을 올리는 것을 기억한다.
+* [R-help mailing list](https://stat.ethz.ch/mailman/listinfo/r-help): R 코어 개발팀을 포함한 
+  많은 사람들이 구독하고 많은 분들이 글을 올리신다. 하지만 상당히 읽기 건조해서, 신규 새내기 사용자를 항상 환영하는 것은 아니다.
+  질문이 타당한 경우, 해결책을 매우 빠르게 얻을 수 있지만 응답에 해맑은 미소를 기대하지는 마라.
+  다른 곳에서도 동일하지만 올바른 용어를 사용하도록 확인한다(그렇지 않는 경우, 질문에 대한 대답을 얻기보다 잘못된 용어에 대한 
+  대답을 받게 된다). 묻는 질문이 특정 팩키지보다 `base` 함수에 대한 질문이라면 더 성공가능성이 높다.
+* 질문이 특정한 팩키지라면, 해당 팩키지에 메일링 리스트가 존재하는지 확인한다.
+  일반적으로 `packageDescription("name-of-package")` 명령어를 사용하면 메일링 리스트가 
+  팩키지 DESCRIPTION 파일에 담겨있다. 
+  팩키지 개발자에게 직접 전자우편으로 보내거나, 코드 저장소(즉, GitHub)에 이슈를 열어 도움을 구한다.
+* 특수한 주제를 갖는 메일링 리스트도 있다(GIS, phylogenetics 등...),
+  전체 메일링 리스트는 [요기](http://www.r-project.org/mail.html)를 참조한다.
 
 ## 추가 도움자료
 
